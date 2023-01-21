@@ -21,9 +21,13 @@ const importFile = yargs
 
     (argv) => {
       if (argv.files) {
-        copyFile(argv.files, argv.directory);
+        copyFile(
+          argv.files,
+          argv.directory,
+          path.join(dirPath, "/files/images", imageFile)
+        );
       } else {
-        copyDir(argv.directory);
+        copyDir(argv.directory, path.join(dirPath, "files/images"));
       }
     }
   )

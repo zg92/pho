@@ -3,19 +3,16 @@ const path = require("path");
 const { dirPath } = require("../../dir");
 const { copyFile } = require("./copyFile");
 
-const copyDir = (directory) => {
+const copyDir = (directory, destination) => {
   c = 0;
   fs.readdirSync(directory).forEach((file) => {
     if (path.parse(file).ext === ".jpg" || path.parse(file).ext === ".png") {
-      copyFile([file], directory);
+      copyFile([file], directory, destination);
       c++;
     }
   });
   console.log(
-    `Directory has been copied to ${path.join(
-      dirPath,
-      "files/images"
-    )}. ${c} files have been copied`
+    `Directory has been copied to ${destination}. ${c} files have been copied`
   );
 };
 

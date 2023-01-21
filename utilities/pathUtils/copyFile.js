@@ -2,11 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const { dirPath } = require("../../dir");
 
-const copyFile = (files, directory) => {
+const copyFile = (files, directory, dest) => {
   files.forEach((imageFile) => {
     fs.copyFile(
       path.join(directory, "/", imageFile),
-      path.join(dirPath, "/", "files", "images", imageFile),
+      dest,
       fs.constants.COPYFILE_EXCL,
       (err) => {
         if (err) {

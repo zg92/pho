@@ -1,6 +1,10 @@
+const path = require("path");
 const yargs = require("yargs");
+const { dirPath } = require("../dir");
+const { copyDir } = require("../utilities/pathUtils/copyDir");
+const { copyFile } = require("../utilities/pathUtils/copyFile");
 
-const exportFile = yargs
+const exportFiles = yargs
   .command(
     "$0 <command> [directory] [files] <destination>",
     "Initialize program",
@@ -9,6 +13,7 @@ const exportFile = yargs
         alias: "d",
         describe: "Specifies the source directory to import into CLIP",
         type: "string",
+        default: path.join(dirPath, "files/images"),
       }),
         yargs.option("files", {
           alias: "f",
@@ -25,9 +30,9 @@ const exportFile = yargs
 
     (argv) => {
       if (argv.files) {
-        copyFile(argv.files, argv.destination);
+        copyFile(argv.files, argv.directory, argv.destination);
       } else {
-        copyDir(argv.destination);
+        copyDir(argv.directory, argv.destination);
       }
     }
   )
