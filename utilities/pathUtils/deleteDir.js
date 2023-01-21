@@ -3,10 +3,10 @@ const { checkPath } = require("./checkPath");
 const fs = require("fs");
 const path = require("path");
 
-const deleteDir = (argv) => {
-  const dirPathPreDeleted = path.join(dirPath, "files", argv.directory);
+const deleteDir = async (directory) => {
+  const dirPathPreDeleted = path.join(dirPath, "files", directory);
   if (checkPath(dirPathPreDeleted)) {
-    fs.rm(dirPathPreDeleted, { recursive: true }, (err) => {
+    fs.rmSync(dirPathPreDeleted, { recursive: true }, (err) => {
       if (err) {
         console.log(err);
       } else {

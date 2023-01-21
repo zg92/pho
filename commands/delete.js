@@ -26,7 +26,7 @@ const del = yargs
       if (argv.directory === "images" && !argv.files) {
         console.log("The images directory cannot be deleted");
       } else if (argv.directory !== "images" && !argv.files) {
-        deleteDir(argv);
+        deleteDir(argv.directory);
       } else if (argv.files) {
         argv.files.forEach((imageFile) => {
           deleteFile(imageFile, argv);
