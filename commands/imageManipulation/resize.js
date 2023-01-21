@@ -1,6 +1,6 @@
 const yargs = require("yargs");
 const { dirPath } = require("../../dir");
-const { resizeImage } = require("../../utilities/resizeImage");
+const { resizeImage } = require("../../utilities/imgUtils/resizeImage");
 const path = require("path");
 const fs = require("fs");
 
@@ -54,7 +54,6 @@ const compress = yargs
             );
           });
         } else if (!argv.files && argv.directory) {
-          console.log(path.join(dirPath, "files", argv.directory));
           fs.readdirSync(path.join(dirPath, "files", argv.directory)).forEach(
             (imageFile) => {
               resizeImage(

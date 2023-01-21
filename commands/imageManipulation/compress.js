@@ -1,6 +1,6 @@
 const yargs = require("yargs");
 const { dirPath } = require("../../dir");
-const { resizeImage } = require("../../utilities/resizeImage");
+const { resizeImage } = require("../../utilities/imgUtils/resizeImage");
 const path = require("path");
 const fs = require("fs");
 

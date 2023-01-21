@@ -1,4 +1,4 @@
-const { checkPath } = require("./checkPath");
+const { checkPath } = require("../pathUtils/checkPath");
 const fs = require("fs");
 const path = require("path");
 const { getExif } = require("./getExif");

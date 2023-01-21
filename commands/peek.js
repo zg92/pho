@@ -1,7 +1,7 @@
 const yargs = require("yargs");
 const path = require("path");
-const { getMetrics } = require("../utilities/getMetrics");
-const { getExif } = require("../utilities/getExif");
+const { getMetrics } = require("../utilities/imgUtils/getMetrics");
+const { getExif } = require("../utilities/imgUtils/getExif");
 const { dirPath } = require("../dir.js");
 
 const peek = yargs
