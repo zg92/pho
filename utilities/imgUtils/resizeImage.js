@@ -3,34 +3,32 @@ const sharp = require("sharp");
 const { getWidthHeight } = require("./getWidthHeight");
 const { getDest } = require("../pathUtils/getDest");
 const path = require("path");
+const { handleError } = require("../errUtil/errorHandler");
 
 const resizeImage = async (img, dest, newDim, operation) => {
   if (checkPath(img)) {
     try {
-      const widthHeight = getWidthHeight(img);
-      console.log(img);
-      sharp(img)
+      const widthHeight = await getWidthHeight(img);
+      const output = sharp(img)
         .resize(null, Math.round(widthHeight.width * newDim, 0))
-        .toFile(getDest(dest, img, operation), (err, info) => {
-          if (!err) {
-            console.log(
-              `Image ${
-                path.parse(img).base
-              } has been ${operation} and has been saved in ${getDest(
-                dest,
-                img,
-                operation
-              )} `
-            );
-          } else {
-            console.log("Error:", err);
-          }
-        });
+        .toFile(getDest(dest, img, operation));
+      console.log(
+        `Image ${
+          path.parse(img).base
+        } has been ${operation} and has been saved in ${getDest(
+          dest,
+          img,
+          operation
+        )}`
+      );
+      return output;
     } catch (err) {
-      console.log("Error:", err.message);
+      return handleError(err);
     }
   } else {
-    console.log("The image you provided does not seem to exist.");
+    return handleError(
+      new Error("The image you provided does not seem to exist.")
+    );
   }
 };
 

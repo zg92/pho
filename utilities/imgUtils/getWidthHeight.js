@@ -1,7 +1,7 @@
 const { getExif } = require("./getExif");
 
-const getWidthHeight = (img) => {
-  const { imageSize } = getExif(img, "all");
+const getWidthHeight = async (img) => {
+  const { imageSize } = await getExif(img, "all");
   return imageSize;
 };
 

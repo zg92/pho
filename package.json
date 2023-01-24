@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "exif-parser": "^0.1.12",
+    "jimp": "^0.16.2",
     "sharp": "^0.31.3",
     "yargs": "^17.6.2"
   }

@@ -1,5 +1,6 @@
 const exifParser = require("exif-parser");
 const fs = require("fs");
+const { handleError } = require("../errUtil/errorHandler");
 
 const capitalizeOption = (option) => {
   return option[0].toUpperCase() + option.slice(1).toLowerCase();
@@ -28,8 +29,8 @@ const getExif = (img, options) => {
       const { tags, imageSize } = exifData;
       return { tags, imageSize };
     }
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    return handleError(err);
   }
 };
 

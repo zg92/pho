@@ -6,7 +6,7 @@ const { copyFile } = require("../utilities/pathUtils/copyFile");
 
 const exportFiles = yargs
   .command(
-    "$0 <command> [directory] [files] <destination>",
+    "$0 <command> [directory] [files] [destination]",
     "Initialize program",
     (yargs) => {
       yargs.option("directory", {
