@@ -1,11 +1,13 @@
 const yargs = require("yargs");
 const { copyDir } = require("../utilities/pathUtils/copyDir");
 const { copyFile } = require("../utilities/pathUtils/copyFile");
+const path = require("path");
+const { dirPath } = require("../dir");
 
 const importFile = yargs
   .command(
     "$0 <command> [directory] [files]",
-    "Initialize program",
+    "Import files from a local file into a directory in CLIP.",
     (yargs) => {
       yargs.option("directory", {
         alias: "d",
@@ -27,6 +29,7 @@ const importFile = yargs
           path.join(dirPath, "/files/images", imageFile)
         );
       } else {
+        console.log(argv.directory);
         copyDir(argv.directory, path.join(dirPath, "files/images"));
       }
     }

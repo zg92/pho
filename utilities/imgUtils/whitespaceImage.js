@@ -3,14 +3,25 @@ const { resizeImage } = require("./resizeImage");
 const Jimp = require("jimp");
 const path = require("path");
 const { dirPath } = require("../../dir");
+const { handleError } = require("../errUtil/errorHandler");
+
+const runImageChecks = (ig, height, width) => {
+  if (ig === true) {
+    size = 1.0;
+  }
+
+  if (height > width) {
+    width = width * 1.2;
+  }
+};
 
 const createWhiteSpaceImage = (width, height) => {
   return new Jimp(width, height, "white");
 };
 
 const createResizedImage = async (img, size) => {
-  await resizeImage(img, false, size, "whitespace");
-  return path.join(dirPath, "files", "whitespace", path.parse(img).base);
+  await resizeImage(img, false, size, "whitespaced");
+  return path.join(dirPath, "files", "whitespaced", path.parse(img).base);
 };
 
 const createImageComposite = (
@@ -25,17 +36,28 @@ const createImageComposite = (
 
   backgroundImage.composite(resizedImage, x, y);
   return backgroundImage.writeAsync(
-    path.join(dirPath, "files", "whitespace", path.parse(img).base)
+    path.join(dirPath, "files", "whitespaced", path.parse(img).base)
   );
 };
 
-const whiteSpace = async (img, size) => {
-  const { width, height } = await getWidthHeight(img);
-  const backgroundImage = createWhiteSpaceImage(width, height);
-  const image = await createResizedImage(img, size);
-  const resizedImage = await Jimp.read(image);
-
-  createImageComposite(backgroundImage, resizedImage, width, height, img);
+const whiteSpace = async (img, size, ig) => {
+  try {
+    const { width, height } = await getWidthHeight(img);
+    runImageChecks(ig, height, width);
+    const backgroundImage = createWhiteSpaceImage(width, height, ig);
+    const image = await createResizedImage(img, size);
+    const resizedImage = await Jimp.read(image);
+    await createImageComposite(
+      backgroundImage,
+      resizedImage,
+      width,
+      height,
+      img,
+      ig
+    );
+  } catch (err) {
+    return handleError(err);
+  }
 };
 
 module.exports = { whiteSpace };

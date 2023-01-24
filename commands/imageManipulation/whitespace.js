@@ -2,6 +2,7 @@ const path = require("path");
 const yargs = require("yargs");
 const { whiteSpace } = require("../../utilities/imgUtils/whitespaceImage");
 const { dirPath } = require("../../dir");
+const fs = require("fs");
 
 const whitespace = yargs
   .command(
@@ -34,9 +35,9 @@ const whitespace = yargs
           alias: "s",
           type: "number",
           describe:
-            "Required parameter that lets you set the percentage you want to resize the image by.",
+            "Required parameter that lets you set the percentage you want to resize the image by. Anything greater than 1 will crop the output image and increase the images width and height.",
         });
-      yargs.option("ig", {
+      yargs.option("igify", {
         alias: "ig",
         type: "boolean",
         describe: "Creates a whitespace 4x5 crop used for upload to IG.",
@@ -46,25 +47,25 @@ const whitespace = yargs
     (argv) => {
       if (!argv.size) {
         console.log(
-          "You must input the resize factor (e.g. 0.5) to use this command"
+          "You must input the resize factor (e.g. 0.5) to use this command."
         );
       } else {
         if (argv.files) {
           argv.files.forEach((imageFile) => {
             whiteSpace(
               path.join(dirPath, "files", argv.directory, imageFile),
-              argv.size
+              argv.size,
+              argv.igify
             );
           });
         } else if (!argv.files && argv.directory) {
           fs.readdirSync(path.join(dirPath, "files", argv.directory)).forEach(
             (imageFile) => {
-              argv.files.forEach((imageFile) => {
-                whiteSpace(
-                  path.join(dirPath, "files", argv.directory, imageFile),
-                  argv.size
-                );
-              });
+              whiteSpace(
+                path.join(dirPath, "files", argv.directory, imageFile),
+                argv.size,
+                argv.igify
+              );
             }
           );
         } else {

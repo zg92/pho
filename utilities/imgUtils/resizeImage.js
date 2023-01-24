@@ -1,17 +1,17 @@
 const { checkPath } = require("../pathUtils/checkPath");
-const sharp = require("sharp");
 const { getWidthHeight } = require("./getWidthHeight");
 const { getDest } = require("../pathUtils/getDest");
 const path = require("path");
 const { handleError } = require("../errUtil/errorHandler");
+const Jimp = require("jimp");
 
 const resizeImage = async (img, dest, newDim, operation) => {
   if (checkPath(img)) {
     try {
-      const widthHeight = await getWidthHeight(img);
-      const output = sharp(img)
-        .resize(null, Math.round(widthHeight.width * newDim, 0))
-        .toFile(getDest(dest, img, operation));
+      const { width, height } = await getWidthHeight(img);
+      const resizeImage = await Jimp.read(img);
+      resizeImage.resize(width * newDim, height * newDim);
+      await resizeImage.writeAsync(getDest(dest, img, operation));
       console.log(
         `Image ${
           path.parse(img).base
@@ -21,7 +21,7 @@ const resizeImage = async (img, dest, newDim, operation) => {
           operation
         )}`
       );
-      return output;
+      return;
     } catch (err) {
       return handleError(err);
     }
