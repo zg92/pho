@@ -1,10 +1,11 @@
-const yargs = require("yargs");
 const { initClip } = require("../utilities/pathUtils/init.js");
 
-const init = yargs
-  .command("$0 <command>", "Initialize program", () => {
+const init = {
+  command: "init",
+  describe: "Initialize program",
+  handler: () => {
     initClip();
-  })
-  .help().argv;
+  },
+};
 
-module.exports = { init };
+module.exports = init;

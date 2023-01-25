@@ -1,3 +1,3 @@
-const dirPath = __dirname;
+const dirPath = process.cwd();
 
 module.exports = { dirPath };

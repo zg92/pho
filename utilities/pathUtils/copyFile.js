@@ -4,7 +4,7 @@ const { dirPath } = require("../../dir");
 
 const copyFile = (files, directory, dest) => {
   files.forEach((imageFile) => {
-    fs.copyFile(
+    fs.copyFileSync(
       path.join(directory, "/", imageFile),
       dest,
       fs.constants.COPYFILE_EXCL,

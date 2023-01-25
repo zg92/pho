@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const { dirPath } = require("../../dir");
 const { copyFile } = require("./copyFile");
 
 const copyDir = (directory, destination) => {

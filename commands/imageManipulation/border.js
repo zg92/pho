@@ -1,10 +1,10 @@
-const { dirPath } = require("../../dir");
-const { resizeImage } = require("../../utilities/imgUtils/resizeImage");
 const path = require("path");
+const { whiteSpace } = require("../../utilities/imgUtils/whitespaceImage");
+const { dirPath } = require("../../dir");
 const fs = require("fs");
 
-const resize = {
-  command: "resize [inplace] [directory] [files] [resize]",
+const border = {
+  command: "border [inplace] [directory] [files] [size] [ig]",
   describe:
     "Compress all files in a directory, a single file, or multiple files",
   builder: (yargs) => {
@@ -30,36 +30,40 @@ const resize = {
         describe:
           "Optional parameter that will perform the image resize on the image(s) specified. A single or multiple image files can be entered.",
       }),
-      yargs.option("resize", {
-        alias: "r",
+      yargs.option("size", {
+        alias: "s",
         type: "number",
         describe:
-          "required parameter that lets you set the percentage you want to resize the image by.",
+          "Required parameter that lets you set the percentage you want to resize the image by. Anything greater than 1 will crop the output image and increase the images width and height.",
       });
+    yargs.option("igify", {
+      alias: "ig",
+      type: "boolean",
+      describe: "Creates a whitespace 4x5 crop used for upload to IG.",
+      default: true,
+    });
   },
   handler: (argv) => {
-    if (!argv.resize) {
+    if (!argv.size) {
       console.log(
-        "You must input the resize factor (e.g. 0.5) to use this command"
+        "You must input the resize factor (e.g. 0.5) to use this command."
       );
     } else {
       if (argv.files) {
         argv.files.forEach((imageFile) => {
-          resizeImage(
+          whiteSpace(
             path.join(dirPath, "files", argv.directory, imageFile),
-            argv.inplace,
-            argv.resize,
-            "resized"
+            argv.size,
+            argv.igify
           );
         });
       } else if (!argv.files && argv.directory) {
         fs.readdirSync(path.join(dirPath, "files", argv.directory)).forEach(
           (imageFile) => {
-            resizeImage(
+            whiteSpace(
               path.join(dirPath, "files", argv.directory, imageFile),
-              argv.inplace,
-              argv.resize,
-              "resized"
+              argv.size,
+              argv.igify
             );
           }
         );
@@ -72,4 +76,4 @@ const resize = {
   },
 };
 
-module.exports = resize;
+module.exports = border;
