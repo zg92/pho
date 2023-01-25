@@ -1,7 +1,7 @@
 const { copyDir } = require("../utilities/pathUtils/copyDir");
 const { copyFile } = require("../utilities/pathUtils/copyFile");
 const path = require("path");
-const { dirPath } = require("../dir");
+const { dirPath } = require("../utilities/pathUtils/dir");
 
 const importFiles = {
   command: "import [directory] [files]",

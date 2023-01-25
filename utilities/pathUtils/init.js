@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { dirPath } = require("../../dir");
+const { dirPath } = require("./dir");
 
 const initFiles = async () => {
   console.log("Connecting to the directory...");

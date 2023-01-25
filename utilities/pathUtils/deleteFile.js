@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { dirPath } = require("../../dir");
+const { dirPath } = require("./dir");
 const { checkPath } = require("./checkPath");
 const path = require("path");
 

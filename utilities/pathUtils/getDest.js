@@ -1,4 +1,4 @@
-const { dirPath } = require("../../dir");
+const { dirPath } = require("./dir");
 const path = require("path");
 const { checkPath } = require("./checkPath");
 const fs = require("fs");

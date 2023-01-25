@@ -1,6 +1,6 @@
 const exifParser = require("exif-parser");
 const fs = require("fs");
-const { handleError } = require("../errUtil/errorHandler");
+const { handleError } = require("../errUtils/errorHandler");
 
 const capitalizeOption = (option) => {
   return option[0].toUpperCase() + option.slice(1).toLowerCase();

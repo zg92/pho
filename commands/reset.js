@@ -1,5 +1,4 @@
-const yargs = require("yargs");
-const { dirPath } = require("../dir");
+const { dirPath } = require("../utilities/pathUtils/dir");
 const fs = require("fs");
 const path = require("path");
 const { deleteDir } = require("../utilities/pathUtils/deleteDir");

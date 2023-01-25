@@ -2,8 +2,8 @@ const { getWidthHeight } = require("./getWidthHeight");
 const { resizeImage } = require("./resizeImage");
 const Jimp = require("jimp");
 const path = require("path");
-const { dirPath } = require("../../dir");
-const { handleError } = require("../errUtil/errorHandler");
+const { dirPath } = require("../pathUtils/dir");
+const { handleError } = require("../errUtils/errorHandler");
 
 const runImageChecks = (ig, height, width) => {
   if (ig === true) {

@@ -1,7 +1,7 @@
 const yargs = require("yargs");
 const path = require("path");
 const { checkPath } = require("../utilities/pathUtils/checkPath");
-const { dirPath } = require("../dir");
+const { dirPath } = require("../utilities/pathUtils/dir");
 const {
   renameFileExecute,
   renameFilePath,
