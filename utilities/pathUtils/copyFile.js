@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const { dirPath } = require("./dir");
 
 const copyFile = (files, directory, dest) => {
   files.forEach((imageFile) => {
@@ -14,7 +13,7 @@ const copyFile = (files, directory, dest) => {
         } else {
           console.log(
             `Image copied to ${path.join(
-              dirPath,
+              process.cwd(),
               "/",
               "files",
               "images",

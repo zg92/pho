@@ -1,6 +1,5 @@
 const path = require("path");
 const { whiteSpace } = require("../../utilities/imgUtils/whitespaceImage");
-const { dirPath } = require("../../utilities/pathUtils/dir");
 const fs = require("fs");
 
 const border = {
@@ -44,7 +43,7 @@ const border = {
     });
   },
   handler: (argv) => {
-    if (!argv.size) {
+    if (!argv.size && !argv.igify) {
       console.log(
         "You must input the resize factor (e.g. 0.5) to use this command."
       );
@@ -52,16 +51,16 @@ const border = {
       if (argv.files) {
         argv.files.forEach((imageFile) => {
           whiteSpace(
-            path.join(dirPath, "files", argv.directory, imageFile),
+            path.join(process.cwd(), imageFile),
             argv.size,
             argv.igify
           );
         });
       } else if (!argv.files && argv.directory) {
-        fs.readdirSync(path.join(dirPath, "files", argv.directory)).forEach(
+        fs.readdirSync(path.join(process.cwd(), "phofiles", argv.directory)).forEach(
           (imageFile) => {
             whiteSpace(
-              path.join(dirPath, "files", argv.directory, imageFile),
+              path.join(process.cwd(), "phofiles", argv.directory, imageFile),
               argv.size,
               argv.igify
             );

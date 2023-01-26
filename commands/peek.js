@@ -1,7 +1,6 @@
 const path = require("path");
 const { getMetrics } = require("../utilities/imgUtils/getMetrics");
 const { getExif } = require("../utilities/imgUtils/getExif");
-const { dirPath } = require("../utilities/pathUtils/dir.js");
 
 const peek = {
   peek: "peek [dirName] [extra] [files] [options]",
@@ -12,7 +11,7 @@ const peek = {
       .positional("dirName", {
         type: "string",
         describe: "Specify the directory you want to peek at",
-        default: ''
+        default: 'images'
       })
       .option("exif", {
         alias: "e",
@@ -40,14 +39,14 @@ const peek = {
   handler: (argv) => {
     if (!argv.files) {
       getMetrics(
-        path.join(dirPath, argv.dirName),
+        path.join(process.cwd(), 'phofiles', argv.dirName),
         argv.exif,
         argv.options
       );
     } else {
       argv.files.forEach((fileName) => {
         exifData = getExif(
-          path.join(dirPath, argv.dirName, fileName),
+          path.join(process.cwd(), 'phofiles', argv.dirName, fileName),
           argv.options
         );
         console.log(`Here is the exif data you requested for ${fileName}:`);

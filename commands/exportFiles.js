@@ -1,5 +1,4 @@
 const path = require("path");
-const { dirPath } = require("../utilities/pathUtils/dir");
 const { copyDir } = require("../utilities/pathUtils/copyDir");
 const { copyFile } = require("../utilities/pathUtils/copyFile");
 
@@ -9,9 +8,9 @@ const exportFiles = {
   builder: (yargs) => {
     yargs.option("directory", {
       alias: "d",
-      describe: "Specifies the source directory to import into Pho",
+      describe: "Specifies the source directory to export from Pho",
       type: "string",
-      default: path.join(dirPath),
+      default: 'images'
     }),
       yargs.option("files", {
         alias: "f",
@@ -21,16 +20,16 @@ const exportFiles = {
       yargs.option("destination", {
         alias: "dest",
         describe:
-          "Specifies the destination directory you want to export images to.",
+          "Specifies the destination directory you want to export images into.",
         type: "string",
       });
   },
 
   handler: (argv) => {
     if (argv.files) {
-      copyFile(argv.files, argv.directory, argv.destination);
+      copyFile(argv.files, path.join(process.cwd(), 'phofiles', argv.directory), argv.destination);
     } else {
-      copyDir(argv.directory, argv.destination);
+      copyDir(path.join(process.cwd(), 'phofiles', argv.directory), argv.destination);
     }
   },
 };

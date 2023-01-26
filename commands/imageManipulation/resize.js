@@ -1,4 +1,3 @@
-const { dirPath } = require("../../utilities/pathUtils/dir");
 const { resizeImage } = require("../../utilities/imgUtils/resizeImage");
 const path = require("path");
 const fs = require("fs");
@@ -46,17 +45,17 @@ const resize = {
       if (argv.files) {
         argv.files.forEach((imageFile) => {
           resizeImage(
-            path.join(dirPath, "files", argv.directory, imageFile),
+            path.join(process.cwd(), "phofiles", argv.directory, imageFile),
             argv.inplace,
             argv.resize,
             "resized"
           );
         });
       } else if (!argv.files && argv.directory) {
-        fs.readdirSync(path.join(dirPath, "files", argv.directory)).forEach(
+        fs.readdirSync(path.join(process.cwd(), "phofiles", argv.directory)).forEach(
           (imageFile) => {
             resizeImage(
-              path.join(dirPath, "files", argv.directory, imageFile),
+              path.join(process.cwd(), "phofiles", argv.directory, imageFile),
               argv.inplace,
               argv.resize,
               "resized"

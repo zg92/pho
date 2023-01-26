@@ -5,7 +5,8 @@ const { copyFile } = require("./copyFile");
 const copyDir = (directory, destination) => {
   c = 0;
   fs.readdirSync(directory).forEach((file) => {
-    if (path.parse(file).ext === ".jpg" || path.parse(file).ext === ".png") {
+    const fileType = path.parse(file).ext
+    if (fileType.toLowerCase() === ".jpg" || fileType.toLowerCase() === ".png" || fileType.toLowerCase() === ".jpeg") {
       copyFile([file], directory, destination);
       c++;
     }

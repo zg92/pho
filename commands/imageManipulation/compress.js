@@ -1,4 +1,4 @@
-const { dirPath } = require("../../utilities/pathUtils/dir");
+
 const { resizeImage } = require("../../utilities/imgUtils/resizeImage");
 const path = require("path");
 const fs = require("fs");
@@ -35,18 +35,17 @@ const compress = {
     if (argv.files) {
       argv.files.forEach((imageFile) => {
         resizeImage(
-          path.join(dirPath, "files", argv.directory, imageFile),
+          path.join(process.cwd(), argv.directory, imageFile),
           argv.inplace,
           Number(0.6),
           "compressed"
         );
       });
     } else if (!argv.files && argv.directory) {
-      console.log(path.join(dirPath, "files", argv.directory));
-      fs.readdirSync(path.join(dirPath, "files", argv.directory)).forEach(
+      fs.readdirSync(path.join(process.cwd(), 'phofiles', argv.directory)).forEach(
         (imageFile) => {
           resizeImage(
-            path.join(dirPath, "files", argv.directory, imageFile),
+            path.join(process.cwd(), 'phofiles', argv.directory, imageFile),
             argv.inplace,
             Number(0.6),
             "compressed"

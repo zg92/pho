@@ -1,7 +1,6 @@
 const { copyDir } = require("../utilities/pathUtils/copyDir");
 const { copyFile } = require("../utilities/pathUtils/copyFile");
 const path = require("path");
-const { dirPath } = require("../utilities/pathUtils/dir");
 
 const importFiles = {
   command: "import [directory] [files]",
@@ -24,11 +23,11 @@ const importFiles = {
       copyFile(
         argv.files,
         argv.directory,
-        path.join(dirPath, imageFile)
+        path.join(process.cwd(), 'phofiles', 'images', imageFile)
       );
     } else {
       console.log(argv.directory);
-      copyDir(argv.directory, path.join(dirPath));
+      copyDir(argv.directory, path.join(process.cwd(), 'phofiles', 'images'));
     }
   },
 };

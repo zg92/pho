@@ -1,12 +1,11 @@
 const fs = require("fs");
-const { dirPath } = require("./dir");
 const { checkPath } = require("./checkPath");
 const path = require("path");
 
 const deleteFile = (filePath, argv) => {
   const filePathPreDeleted = path.join(
-    dirPath,
-    "files",
+    process.cwd(),
+    "phofiles",
     argv.directory,
     filePath
   );

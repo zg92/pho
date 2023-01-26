@@ -1,4 +1,3 @@
-const { dirPath } = require("./dir");
 const path = require("path");
 const { checkPath } = require("./checkPath");
 const fs = require("fs");
@@ -8,7 +7,7 @@ const getDest = (dest, img, operationType) => {
   if (dest) {
     return renameFilePath(img, `${path.parse(img).name}-${operationType}`);
   } else {
-    const newDirPath = path.join(dirPath, "files", `${operationType}`);
+    const newDirPath = path.join(process.cwd(), 'phofiles', operationType);
     if (!checkPath(newDirPath)) {
       fs.mkdirSync(newDirPath);
     }

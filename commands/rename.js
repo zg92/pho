@@ -1,7 +1,7 @@
 const yargs = require("yargs");
 const path = require("path");
 const { checkPath } = require("../utilities/pathUtils/checkPath");
-const { dirPath } = require("../utilities/pathUtils/dir");
+
 const {
   renameFileExecute,
   renameFilePath,
@@ -11,7 +11,7 @@ const rename = {
   command: "rename <image> <name> [add]",
   describe:
     "Rename an existing file by passing in the file as the first argument, then the desired new name. The provided new name replaces the existing name by default, however the --a option enables you to append the end of the image's existing name.",
-  handler: (yargs) => {
+  builder: (yargs) => {
     yargs.positional("image", {
       alias: "i",
       type: "string",
@@ -19,7 +19,7 @@ const rename = {
       nargs: 1,
     });
     yargs.positional("name", {
-      name: "n",
+      alias: "n",
       type: "string",
       describe: "The desired new name of the image path provided",
       nargs: 1,
@@ -33,8 +33,8 @@ const rename = {
     });
   },
 
-  builder: (argv) => {
-    const imagePreRename = path.join(dirPath, "files", "images", argv.image);
+  handler: (argv) => {
+    const imagePreRename = path.join(process.cwd(), 'phofiles', "images", argv.image);
 
     if (checkPath(imagePreRename)) {
       argv.add

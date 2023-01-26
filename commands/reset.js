@@ -1,4 +1,3 @@
-const { dirPath } = require("../utilities/pathUtils/dir");
 const fs = require("fs");
 const path = require("path");
 const { deleteDir } = require("../utilities/pathUtils/deleteDir");
@@ -19,14 +18,15 @@ const reset = {
   },
 
   handler: (argv) => {
-    dirs = fs.readdirSync(path.join(dirPath));
+    dirs = fs.readdirSync(path.join(process.cwd(), 'phofiles'));
     dirs.forEach(async (dirPathPreDeleted) => {
       if (argv.keep) {
-        if (dirPathPreDeleted !== dirPath) {
+        console.log('yess')
+        if (dirPathPreDeleted !== 'images') {
           deleteDir(dirPathPreDeleted);
         }
       } else {
-        await deleteDir(dirPathPreDeleted);
+        deleteDir(dirPathPreDeleted);
         initPho();
       }
     });
