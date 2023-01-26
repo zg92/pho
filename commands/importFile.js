@@ -26,7 +26,6 @@ const importFiles = {
         path.join(process.cwd(), 'phofiles', 'images', imageFile)
       );
     } else {
-      console.log(argv.directory);
       copyDir(argv.directory, path.join(process.cwd(), 'phofiles', 'images'));
     }
   },

@@ -3,5 +3,4 @@
 - better filtering of exif data 
 - error handling for missing exif data
 
--reset should give option to retain main directory 
--reset a specific directory
+
