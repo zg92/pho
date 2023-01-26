@@ -12,7 +12,7 @@ const peek = {
       .positional("dirName", {
         type: "string",
         describe: "Specify the directory you want to peek at",
-        default: "images",
+        default: ''
       })
       .option("exif", {
         alias: "e",
@@ -34,21 +34,20 @@ const peek = {
         describe:
           "If you use the file arg, --options specify what exif data you want to retrieve by passing the needed info's name seperated by commas with no spacing. Options can be passed in all lowercase or using capitalization shown in the raw exif results.",
         default: "all",
-        nargs: 1,
       });
   },
 
-  handler: async (argv) => {
+  handler: (argv) => {
     if (!argv.files) {
       getMetrics(
-        path.join(dirPath, "files", argv.dirName),
+        path.join(dirPath, argv.dirName),
         argv.exif,
         argv.options
       );
     } else {
       argv.files.forEach((fileName) => {
         exifData = getExif(
-          path.join(dirPath, "files", argv.dirName, fileName),
+          path.join(dirPath, argv.dirName, fileName),
           argv.options
         );
         console.log(`Here is the exif data you requested for ${fileName}:`);

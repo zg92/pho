@@ -5,13 +5,13 @@ const { copyFile } = require("../utilities/pathUtils/copyFile");
 
 const exportFiles = {
   command: "export [directory] [files] [destination]",
-  describe: "Initialize program",
+  describe: "Export files from a Pho directory to an external directory.",
   builder: (yargs) => {
     yargs.option("directory", {
       alias: "d",
-      describe: "Specifies the source directory to import into CLIP",
+      describe: "Specifies the source directory to import into Pho",
       type: "string",
-      default: path.join(dirPath, "files/images"),
+      default: path.join(dirPath),
     }),
       yargs.option("files", {
         alias: "f",
@@ -27,6 +27,7 @@ const exportFiles = {
   },
 
   handler: (argv) => {
+    console.log(argv.directory)
     if (argv.files) {
       copyFile(argv.files, argv.directory, argv.destination);
     } else {

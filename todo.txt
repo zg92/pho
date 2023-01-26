@@ -1,0 +1,9 @@
+- allow any file capitalization and more alts like JPEG
+- concat not imported files and let user know they couldn't be included
+
+- better filtering of exif data 
+- error handling for missing exif data
+
+-reset should give option to retain main directory 
+
+- check create new directory and implications on the dirpath

@@ -5,11 +5,11 @@ const { dirPath } = require("../utilities/pathUtils/dir");
 
 const importFiles = {
   command: "import [directory] [files]",
-  describe: "Import files from a local file into a directory in CLIP.",
+  describe: "Import files from a local file into a directory in Pho.",
   builder: (yargs) => {
     yargs.option("directory", {
       alias: "d",
-      describe: "Specifies the source directory to import into CLIP",
+      describe: "Specifies the source directory to import into Pho",
       type: "string",
     }),
       yargs.option("files", {
@@ -24,11 +24,11 @@ const importFiles = {
       copyFile(
         argv.files,
         argv.directory,
-        path.join(dirPath, "/files/images", imageFile)
+        path.join(dirPath, imageFile)
       );
     } else {
       console.log(argv.directory);
-      copyDir(argv.directory, path.join(dirPath, "files/images"));
+      copyDir(argv.directory, path.join(dirPath));
     }
   },
 };

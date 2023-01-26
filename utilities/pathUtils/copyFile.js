@@ -6,7 +6,7 @@ const copyFile = (files, directory, dest) => {
   files.forEach((imageFile) => {
     fs.copyFileSync(
       path.join(directory, "/", imageFile),
-      dest,
+      path.join(dest, "/", path.parse(imageFile).base),
       fs.constants.COPYFILE_EXCL,
       (err) => {
         if (err) {

@@ -2,7 +2,7 @@ const { dirPath } = require("../utilities/pathUtils/dir");
 const fs = require("fs");
 const path = require("path");
 const { deleteDir } = require("../utilities/pathUtils/deleteDir");
-const { initClip } = require("../utilities/pathUtils/init");
+const { initPho } = require("../utilities/pathUtils/init");
 
 const reset = {
   command: "reset [keep]",
@@ -12,22 +12,22 @@ const reset = {
     yargs.option("keep", {
       alias: "k",
       describe:
-        "By default resetting CLIP will retain the images directory. Setting --keep to false will remove all content in the images directory.",
+        "By default resetting Pho will retain the images in the images directory. Setting --keep to false will remove all content in the images directory.",
       type: "boolean",
       default: true,
     });
   },
 
   handler: (argv) => {
-    dirs = fs.readdirSync(path.join(dirPath, "files"));
+    dirs = fs.readdirSync(path.join(dirPath));
     dirs.forEach(async (dirPathPreDeleted) => {
       if (argv.keep) {
-        if (dirPathPreDeleted !== "images") {
+        if (dirPathPreDeleted !== dirPath) {
           deleteDir(dirPathPreDeleted);
         }
       } else {
         await deleteDir(dirPathPreDeleted);
-        initClip();
+        initPho();
       }
     });
   },

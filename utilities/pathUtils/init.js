@@ -35,9 +35,9 @@ const initImages = async () => {
   }
 };
 
-const initClip = async () => {
+const initPho = async () => {
   initFiles();
   initImages();
 };
 
-module.exports = { initClip };
+module.exports = { initPho };
