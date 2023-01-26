@@ -27,7 +27,6 @@ const exportFiles = {
   },
 
   handler: (argv) => {
-    console.log(argv.directory)
     if (argv.files) {
       copyFile(argv.files, argv.directory, argv.destination);
     } else {
