@@ -1,6 +1,6 @@
 const path = require("path");
-const { copyDir } = require("../utilities/pathUtils/copyDir");
-const { copyFile } = require("../utilities/pathUtils/copyFile");
+const copyDir = require("../utilities/pathUtils/copyDir");
+const copyFile = require("../utilities/pathUtils/copyFile");
 
 const exportFiles = {
   command: "export [directory] [files] [destination]",

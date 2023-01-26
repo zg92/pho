@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { checkPath } = require("./checkPath");
+const checkPath = require("./checkPath");
 const path = require("path");
 
 const deleteFile = (filePath, argv) => {
@@ -19,4 +19,4 @@ const deleteFile = (filePath, argv) => {
   }
 };
 
-module.exports = { deleteFile };
+module.exports = deleteFile;

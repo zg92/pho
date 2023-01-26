@@ -1,8 +1,8 @@
-const { checkPath } = require("../pathUtils/checkPath");
-const { getWidthHeight } = require("./getWidthHeight");
-const { getDest } = require("../pathUtils/getDest");
+const checkPath = require("../pathUtils/checkPath");
+const getWidthHeight = require("./getWidthHeight");
+const getDest = require("../pathUtils/getDest");
 const path = require("path");
-const { handleError } = require("../errUtils/errorHandler");
+const handleError = require("../errUtils/errorHandler");
 const Jimp = require("jimp");
 
 const resizeImage = async (img, dest, newDim, operation) => {
@@ -32,4 +32,4 @@ const resizeImage = async (img, dest, newDim, operation) => {
   }
 };
 
-module.exports = { resizeImage };
+module.exports = resizeImage ;

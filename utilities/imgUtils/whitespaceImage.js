@@ -1,8 +1,8 @@
-const { getWidthHeight } = require("./getWidthHeight");
-const { resizeImage } = require("./resizeImage");
+const getWidthHeight = require("./getWidthHeight");
+const resizeImage = require("./resizeImage");
 const Jimp = require("jimp");
 const path = require("path");
-const { handleError } = require("../errUtils/errorHandler");
+const handleError = require("../errUtils/errorHandler");
 
 
 const createWhiteSpaceImage = (width, height) => {
@@ -32,7 +32,7 @@ const createImageComposite = (
 
 const whiteSpace = async (img, size, ig) => {
   try {
-    
+
     let { width, height } = await getWidthHeight(img);
 
     ig ? size = 1.0 : size
@@ -54,4 +54,4 @@ const whiteSpace = async (img, size, ig) => {
   }
 };
 
-module.exports = { whiteSpace };
+module.exports = whiteSpace;

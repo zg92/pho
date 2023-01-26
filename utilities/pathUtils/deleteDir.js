@@ -1,4 +1,4 @@
-const { checkPath } = require("./checkPath");
+const checkPath = require("./checkPath");
 const fs = require("fs");
 const path = require("path");
 
@@ -17,4 +17,4 @@ const deleteDir = async (directory) => {
   }
 };
 
-module.exports = { deleteDir };
+module.exports = deleteDir;

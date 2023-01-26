@@ -40,4 +40,4 @@ const initPho = async () => {
   initImages();
 };
 
-module.exports = { initPho };
+module.exports = initPho;

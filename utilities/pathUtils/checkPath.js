@@ -8,4 +8,4 @@ const checkPath = (pathLocation) => {
   }
 };
 
-module.exports = { checkPath };
+module.exports = checkPath;

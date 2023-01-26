@@ -1,4 +1,4 @@
-const { initPho } = require("../utilities/pathUtils/init.js");
+const initPho = require("../utilities/pathUtils/init.js");
 
 const init = {
   command: "init",

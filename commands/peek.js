@@ -1,6 +1,6 @@
 const path = require("path");
-const { getMetrics } = require("../utilities/imgUtils/getMetrics");
-const { getExif } = require("../utilities/imgUtils/getExif");
+const getMetrics = require("../utilities/imgUtils/getMetrics");
+const getExif = require("../utilities/imgUtils/getExif");
 
 const peek = {
   peek: "peek [dirName] [extra] [files] [options]",

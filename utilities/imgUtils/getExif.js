@@ -1,6 +1,6 @@
 const exifParser = require("exif-parser");
 const fs = require("fs");
-const { handleError } = require("../errUtils/errorHandler");
+const handleError = require("../errUtils/errorHandler");
 
 const getOptions = (exifData, options) => {
   optionObject = {};
@@ -43,4 +43,4 @@ const getExif = (img, options) => {
   }
 };
 
-module.exports = { getExif };
+module.exports = getExif;

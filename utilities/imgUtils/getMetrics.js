@@ -1,7 +1,7 @@
-const { checkPath } = require("../pathUtils/checkPath");
+const checkPath = require("../pathUtils/checkPath");
 const fs = require("fs");
 const path = require("path");
-const { getExif } = require("./getExif");
+const getExif = require("./getExif");
 
 const getMetrics = (customPath, extraData, options) => {
   if (checkPath(customPath)) {
@@ -24,4 +24,4 @@ const getMetrics = (customPath, extraData, options) => {
   }
 };
 
-module.exports = { getMetrics };
+module.exports = getMetrics;

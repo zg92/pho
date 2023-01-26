@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { copyFile } = require("./copyFile");
+const copyFile = require("./copyFile");
 
 const copyDir = (directory, destination) => {
   c = 0;
@@ -16,4 +16,4 @@ const copyDir = (directory, destination) => {
   );
 };
 
-module.exports = { copyDir };
+module.exports = copyDir;

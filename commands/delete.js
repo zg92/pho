@@ -1,5 +1,5 @@
-const { deleteDir } = require("../utilities/pathUtils/deleteDir");
-const { deleteFile } = require("../utilities/pathUtils/deleteFile");
+const deleteDir = require("../utilities/pathUtils/deleteDir");
+const deleteFile = require("../utilities/pathUtils/deleteFile");
 
 const del = {
   command: "delete [directory] [files]",

@@ -1,5 +1,5 @@
 const path = require("path");
-const { whiteSpace } = require("../../utilities/imgUtils/whitespaceImage");
+const whiteSpace = require("../../utilities/imgUtils/whitespaceImage");
 const fs = require("fs");
 
 const border = {

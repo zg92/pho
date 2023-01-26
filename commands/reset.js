@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const { deleteDir } = require("../utilities/pathUtils/deleteDir");
-const { initPho } = require("../utilities/pathUtils/init");
+const deleteDir = require("../utilities/pathUtils/deleteDir");
+const initPho = require("../utilities/pathUtils/init");
 
 const reset = {
   command: "reset [directories] [keep]",

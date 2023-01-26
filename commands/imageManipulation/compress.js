@@ -1,5 +1,4 @@
-
-const { resizeImage } = require("../../utilities/imgUtils/resizeImage");
+const resizeImage = require("../../utilities/imgUtils/resizeImage");
 const path = require("path");
 const fs = require("fs");
 

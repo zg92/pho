@@ -26,4 +26,4 @@ const copyFile = (files, directory, dest) => {
   });
 };
 
-module.exports = { copyFile };
+module.exports = copyFile;

@@ -1,5 +1,5 @@
 const path = require("path");
-const { checkPath } = require("./checkPath");
+const checkPath = require("./checkPath");
 const fs = require("fs");
 const { renameFilePath } = require("./renameFile");
 
@@ -15,4 +15,4 @@ const getDest = (dest, img, operationType) => {
   }
 };
 
-module.exports = { getDest };
+module.exports = getDest;
