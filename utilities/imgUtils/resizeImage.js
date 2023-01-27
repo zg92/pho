@@ -1,27 +1,19 @@
 const checkPath = require("../pathUtils/checkPath");
 const getWidthHeight = require("./getWidthHeight");
 const getDest = require("../pathUtils/getDest");
-const path = require("path");
 const handleError = require("../errUtils/errorHandler");
-const Jimp = require("jimp");
+const sharp = require("sharp");
 
 const resizeImage = async (img, dest, newDim, operation) => {
   if (checkPath(img)) {
     try {
-      const { width, height } = await getWidthHeight(img);
-      const resizeImage = await Jimp.read(img);
-      resizeImage.resize(width * newDim, height * newDim);
-      await resizeImage.writeAsync(getDest(dest, img, operation));
-      console.log(
-        `Image ${
-          path.parse(img).base
-        } has been ${operation} and has been saved in ${getDest(
-          dest,
-          img,
-          operation
-        )}`
-      );
-      return;
+      const { height, width } = await getWidthHeight(img);
+      const resizedImage = sharp(img).resize({
+        width: Math.round(width * newDim),
+        height: Math.round(height * newDim),
+      });
+      await resizedImage.toFile(getDest(dest, img, operation));
+      return resizedImage.toBuffer();
     } catch (err) {
       return handleError(err);
     }
@@ -32,4 +24,4 @@ const resizeImage = async (img, dest, newDim, operation) => {
   }
 };
 
-module.exports = resizeImage ;
+module.exports = resizeImage;

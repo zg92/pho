@@ -1,8 +1,8 @@
 const path = require("path");
 const whiteSpace = require("../../utilities/imgUtils/whitespaceImage");
 const fs = require("fs");
-const config = require('../../utilities/logUtils/log');
-const getConfig = config().get('baseDir')
+const config = require("../../utilities/logUtils/log");
+const getConfig = config().get("baseDir");
 
 const border = {
   command: "border [inplace] [directory] [files] [size] [ig]",
@@ -45,29 +45,25 @@ const border = {
     });
   },
   handler: (argv) => {
-    if (!argv.size) {
+    if (!argv.size && argv.igify === false) {
       console.log(
         "You must input the resize factor (e.g. 0.5) to use this command."
       );
     } else {
       if (argv.files) {
         argv.files.forEach((imageFile) => {
+          whiteSpace(path.join(getConfig, imageFile), argv.size, argv.igify);
+        });
+      } else if (!argv.files && argv.directory) {
+        fs.readdirSync(
+          path.join(getConfig, "phofiles", argv.directory)
+        ).forEach((imageFile) => {
           whiteSpace(
-            path.join(getConfig, imageFile),
+            path.join(getConfig, "phofiles", argv.directory, imageFile),
             argv.size,
             argv.igify
           );
         });
-      } else if (!argv.files && argv.directory) {
-        fs.readdirSync(path.join(getConfig, "phofiles", argv.directory)).forEach(
-          (imageFile) => {
-            whiteSpace(
-              path.join(getConfig, "phofiles", argv.directory, imageFile),
-              argv.size,
-              argv.igify
-            );
-          }
-        );
       } else {
         console.log(
           "No directory or image files have been specified with --directory and/or --files."

@@ -1,8 +1,8 @@
 const resizeImage = require("../../utilities/imgUtils/resizeImage");
 const path = require("path");
 const fs = require("fs");
-const config = require('../../utilities/logUtils/log');
-const getConfig = config().get('baseDir')
+const config = require("../../utilities/logUtils/log");
+const getConfig = config().get("baseDir");
 
 const resize = {
   command: "resize [inplace] [directory] [files] [resize]",
@@ -39,9 +39,9 @@ const resize = {
       });
   },
   handler: (argv) => {
-    if (!argv.resize) {
+    if (!argv.resize || argv.resize <= 0) {
       console.log(
-        "You must input the resize factor (e.g. 0.5) to use this command"
+        "You must input the resize factor (e.g. 0.5) to use this command. Size factor must be greater than 0."
       );
     } else {
       if (argv.files) {
@@ -54,16 +54,16 @@ const resize = {
           );
         });
       } else if (!argv.files && argv.directory) {
-        fs.readdirSync(path.join(getConfig, "phofiles", argv.directory)).forEach(
-          (imageFile) => {
-            resizeImage(
-              path.join(getConfig, "phofiles", argv.directory, imageFile),
-              argv.inplace,
-              argv.resize,
-              "resized"
-            );
-          }
-        );
+        fs.readdirSync(
+          path.join(getConfig, "phofiles", argv.directory)
+        ).forEach((imageFile) => {
+          resizeImage(
+            path.join(getConfig, "phofiles", argv.directory, imageFile),
+            argv.inplace,
+            argv.resize,
+            "resized"
+          );
+        });
       } else {
         console.log(
           "No directory or image files have been specified with --directory and/or --files."

@@ -1,48 +1,57 @@
 const getWidthHeight = require("./getWidthHeight");
 const resizeImage = require("./resizeImage");
-const Jimp = require("jimp");
+const sharp = require("sharp");
 const path = require("path");
 const handleError = require("../errUtils/errorHandler");
-const config = require('../logUtils/log');
-const getConfig = config().get('baseDir')
+const config = require("../logUtils/log");
+const getConfig = config().get("baseDir");
 
-
-const createWhiteSpaceImage = (width, height) => {
-  return new Jimp(width, height, "white");
+const createWhiteSpaceImage = async (width, height) => {
+  return sharp({
+    create: {
+      width: Math.round(width),
+      height: Math.round(height),
+      channels: 4,
+      background: { r: 255, g: 255, b: 255, alpha: 1 },
+    },
+  });
 };
 
-const createResizedImage = async (img, size) => {
-  await resizeImage(img, false, size, "bordered");
-  return path.join(getConfig, "phofiles", "bordered", path.parse(img).base);
-};
-
-const createImageComposite = (
+const createImageComposite = async (
   backgroundImage,
   resizedImage,
   width,
   height,
   img
 ) => {
-  const x = (width - resizedImage.bitmap.width) / 2;
-  const y = (height - resizedImage.bitmap.height) / 2;
+  const { width: resizedWidth, height: resizedHeight } = await sharp(
+    resizedImage
+  ).metadata();
 
-  backgroundImage.composite(resizedImage, x, y);
-  return backgroundImage.writeAsync(
-    path.join(getConfig, "phofiles", "bordered", path.parse(img).base)
-  );
+  const x = (width - resizedWidth) / 2;
+  const y = (height - resizedHeight) / 2;
+
+  backgroundImage
+    .composite([
+      {
+        input: resizedImage,
+        left: Math.round(x),
+        top: Math.round(y),
+      },
+    ])
+    .toFile(path.join(getConfig, "phofiles", "bordered", path.parse(img).base));
 };
 
 const whiteSpace = async (img, size, ig) => {
   try {
-
     let { width, height } = await getWidthHeight(img);
 
-    ig === true ? size = 1.0 : size
-    ig === true && height > width ? width = width * 1.2 : width
+    ig === true ? (size = 1) : size;
+    ig === true && height > width ? (width = width * 1.2) : width;
 
-    const backgroundImage = createWhiteSpaceImage(width, height);
-    const image = await createResizedImage(img, size);
-    const resizedImage = await Jimp.read(image);
+    const backgroundImage = await createWhiteSpaceImage(width, height);
+    const resizedImage = await resizeImage(img, false, size, "bordered");
+
     await createImageComposite(
       backgroundImage,
       resizedImage,
