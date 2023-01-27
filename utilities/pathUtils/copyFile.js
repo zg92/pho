@@ -6,9 +6,9 @@ const copyFile = (files, directory, dest) => {
     fs.copyFileSync(
       path.join(directory, "/", imageFile),
       path.join(dest, "/", path.parse(imageFile).base),
-      fs.constants.COPYFILE_EXCL,
+      null,
       (err) => {
-        if (err) {
+        if (err && err.code !== "EEXIST") {
           console.log("Error:", err);
         } else {
           console.log(

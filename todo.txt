@@ -1,6 +1,2 @@
-- concat not imported files and let user know they couldn't be included
 
-- better filtering of exif data 
-- error handling for missing exif data
 
-- 
