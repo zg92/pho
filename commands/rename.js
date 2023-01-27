@@ -10,7 +10,7 @@ const {
 } = require("../utilities/pathUtils/renameFile");
 
 const rename = {
-  command: "rename <image> <name> [add]",
+  command: "rename [image] [name] [add]",
   describe:
     "Rename an existing file by passing in the file as the first argument, then the desired new name. The provided new name replaces the existing name by default, however the --a option enables you to append the end of the image's existing name.",
   builder: (yargs) => {
@@ -36,35 +36,42 @@ const rename = {
   },
 
   handler: (argv) => {
-    const imagePreRename = path.join(
-      getConfig,
-      "phofiles",
-      "images",
-      argv.image
-    );
-
-    if (checkPath(imagePreRename)) {
-      argv.add
-        ? renameFileExecute(
-            imagePreRename,
-            path.parse(imagePreRename).name + argv.name
-          )
-        : renameFileExecute(imagePreRename, argv.name);
-      log(
-        "success",
-        `${imagePreRename} has been renamed to ${
-          argv.add
-            ? renameFilePath(
-                imagePreRename,
-                path.parse(imagePreRename).name + argv.name
-              )
-            : renameFilePath(imagePreRename, argv.name)
-        }`
+    if (argv.name && argv.image) {
+      const imagePreRename = path.join(
+        getConfig,
+        "phofiles",
+        "images",
+        argv.image
       );
+
+      if (checkPath(imagePreRename)) {
+        argv.add
+          ? renameFileExecute(
+              imagePreRename,
+              path.parse(imagePreRename).name + argv.name
+            )
+          : renameFileExecute(imagePreRename, argv.name);
+        log(
+          "success",
+          `${imagePreRename} has been renamed to ${
+            argv.add
+              ? renameFilePath(
+                  imagePreRename,
+                  path.parse(imagePreRename).name + argv.name
+                )
+              : renameFilePath(imagePreRename, argv.name)
+          }`
+        );
+      } else {
+        log(
+          "inform",
+          `The provided --image ${imagePreRename} does not seem to exist`
+        );
+      }
     } else {
       log(
         "inform",
-        `The provided image ${imagePreRename} name does not seem to exist`
+        "You must provide an --image and --name to rename the image file to the provided --name."
       );
     }
   },
