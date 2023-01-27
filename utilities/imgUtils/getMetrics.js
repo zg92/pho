@@ -2,6 +2,7 @@ const checkPath = require("../pathUtils/checkPath");
 const fs = require("fs");
 const path = require("path");
 const getExif = require("./getExif");
+const log = require("../logUtils/consoleLogging");
 
 const getMetrics = (customPath, extraData, options) => {
   if (checkPath(customPath)) {
@@ -16,11 +17,11 @@ const getMetrics = (customPath, extraData, options) => {
         fileList.push([file, getExif(path.join(customPath, file), options)]);
       }
     });
-    console.log(`${customPath} has ${c} files`);
-    console.log("The files are:");
-    fileList.forEach((file) => console.log(file));
+    log("inform", `${customPath} has ${c} files`);
+    log("inform", "The files are:");
+    fileList.forEach((file) => log("green", file));
   } else {
-    console.log("The provided path does not exist");
+    log("inform", "The provided path does not exist");
   }
 };
 

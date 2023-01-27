@@ -1,8 +1,10 @@
 const fs = require("fs");
-const checkPath = require("./checkPath")
+const checkPath = require("./checkPath");
 const path = require("path");
-const config = require('../logUtils/log');
-const getConfig = config().get('baseDir')
+const config = require("../logUtils/log");
+const getConfig = config().get("baseDir");
+const errorHandler = require("../errUtils/errorHandler");
+const log = require("../logUtils/consoleLogging");
 
 const deleteFile = (filePath, argv) => {
   const filePathPreDeleted = path.join(
@@ -13,11 +15,13 @@ const deleteFile = (filePath, argv) => {
   );
   if (checkPath(filePathPreDeleted)) {
     fs.unlink(filePathPreDeleted, (err) => {
-      if (err) throw err;
-      console.log(`File ${filePath} was successfully deleted`);
+      if (err) {
+        errorHandler(err);
+      }
+      log("success", `File ${filePath} was successfully deleted`);
     });
   } else {
-    console.log(`The file: ${filePath} does not exist.`);
+    log("inform", `The file: ${filePath} does not exist.`);
   }
 };
 

@@ -3,6 +3,7 @@ const getMetrics = require("../utilities/imgUtils/getMetrics");
 const getExif = require("../utilities/imgUtils/getExif");
 const config = require("../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
+const log = require("../utilities/logUtils/consoleLogging");
 
 const peek = {
   peek: "peek [dirName] [extra] [files] [options]",
@@ -51,7 +52,7 @@ const peek = {
           path.join(getConfig, "phofiles", argv.dirName, fileName),
           argv.options
         );
-        console.log(`Here is the exif data you requested for ${fileName}:`);
+        log("success", `Here is the exif data you requested for ${fileName}:`);
         console.log(exifData);
       });
     }

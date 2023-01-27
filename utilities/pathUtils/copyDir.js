@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const copyFile = require("./copyFile");
+const log = require("../logUtils/consoleLogging");
 
 const copyDir = (directory, destination) => {
   returnFiles = { copied: [], notCopied: [] };
@@ -19,12 +20,11 @@ const copyDir = (directory, destination) => {
       returnFiles.notCopied.push(file);
     }
   });
-  console.log(`${c} files have been copied:`);
-  console.log("The files copied were:", returnFiles.copied);
-  console.log(
-    "The following files could not be copied:",
-    returnFiles.notCopied
-  );
+  log("success", `${c} files have been copied.`);
+  log("inform", `The files copied were: `);
+  console.log(returnFiles.copied);
+  log("error", "The following files could not be copied: ");
+  console.log(returnFiles.notCopied);
 };
 
 module.exports = copyDir;

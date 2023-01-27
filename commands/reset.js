@@ -2,8 +2,9 @@ const fs = require("fs");
 const path = require("path");
 const deleteDir = require("../utilities/pathUtils/deleteDir");
 const initPho = require("../utilities/pathUtils/init");
-const config = require('../utilities/logUtils/log');
-const getConfig = config().get('baseDir')
+const config = require("../utilities/logUtils/log");
+const getConfig = config().get("baseDir");
+const log = require("../utilities/logUtils/consoleLogging");
 
 const reset = {
   command: "reset [directories] [keep]",
@@ -16,38 +17,37 @@ const reset = {
         "Optional argument enabling you to specify the directories you would like to reset.",
       type: "array",
     }),
-    
-    yargs.option("keep", {
-      alias: "k",
-      describe:
-        "By default resetting Pho will retain the images in the images directory. Setting --keep to false will remove all content in the images directory.",
-      type: "boolean",
-      default: true,
-    })
+      yargs.option("keep", {
+        alias: "k",
+        describe:
+          "By default resetting Pho will retain the images in the images directory. Setting --keep to false will remove all content in the images directory.",
+        type: "boolean",
+        default: true,
+      });
   },
 
   handler: (argv) => {
-
     if (!argv.directories) {
-    dirs = fs.readdirSync(path.join(getConfig, 'phofiles'));
-    dirs.forEach(async (dirPathPreDeleted) => {
-      if (argv.keep) {
-        if (dirPathPreDeleted !== 'images') {
+      dirs = fs.readdirSync(path.join(getConfig, "phofiles"));
+      dirs.forEach(async (dirPathPreDeleted) => {
+        if (argv.keep) {
+          if (dirPathPreDeleted !== "images") {
+            deleteDir(dirPathPreDeleted);
+          }
+        } else {
+          deleteDir(dirPathPreDeleted);
+          initPho();
+        }
+      });
+    } else {
+      argv.directories.forEach(async (dirPathPreDeleted) => {
+        if (dirPathPreDeleted !== "images") {
           deleteDir(dirPathPreDeleted);
         }
-      } else {
-        deleteDir(dirPathPreDeleted);
-        initPho();
-      }
-    });
-  }
-  else {
-    argv.directories.forEach(async (dirPathPreDeleted) => {
-      if (dirPathPreDeleted !== 'images') {
-        deleteDir(dirPathPreDeleted);
-      }
-  })
-}
-}}
+      });
+    }
+    log("success", "All directories have been reset.");
+  },
+};
 
 module.exports = reset;

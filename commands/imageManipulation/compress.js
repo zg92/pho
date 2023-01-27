@@ -1,8 +1,9 @@
 const resizeImage = require("../../utilities/imgUtils/resizeImage");
 const path = require("path");
 const fs = require("fs");
-const config = require('../../utilities/logUtils/log');
-const getConfig = config().get('baseDir')
+const config = require("../../utilities/logUtils/log");
+const getConfig = config().get("baseDir");
+const log = require("../../utilities/logUtils/consoleLogging");
 
 const compress = {
   command: "compress [inplace] [directory] [files]",
@@ -42,19 +43,25 @@ const compress = {
           "compressed"
         );
       });
+      log("success", "Compression has been completed for specified files.");
     } else if (!argv.files && argv.directory) {
-      fs.readdirSync(path.join(getConfig, 'phofiles', argv.directory)).forEach(
+      fs.readdirSync(path.join(getConfig, "phofiles", argv.directory)).forEach(
         (imageFile) => {
           resizeImage(
-            path.join(getConfig, 'phofiles', argv.directory, imageFile),
+            path.join(getConfig, "phofiles", argv.directory, imageFile),
             argv.inplace,
             Number(0.6),
             "compressed"
           );
         }
       );
+      log(
+        "success",
+        "Compression has been completed for specified directories."
+      );
     } else {
-      console.log(
+      log(
+        "error",
         "No directory or image files have been specified with --directory and/or --files."
       );
     }

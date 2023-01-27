@@ -1,5 +1,7 @@
+const log = require("../logUtils/consoleLogging");
+
 const handleError = (error) => {
-  console.log("Error:", error.message);
+  log("error", `Error: ${error.message}`);
   return error;
 };
 

@@ -3,6 +3,7 @@ const whiteSpace = require("../../utilities/imgUtils/whitespaceImage");
 const fs = require("fs");
 const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
+const log = require("../../utilities/logUtils/consoleLogging");
 
 const border = {
   command: "border [inplace] [directory] [files] [size] [ig]",
@@ -44,28 +45,45 @@ const border = {
       default: false,
     });
   },
-  handler: (argv) => {
+  handler: async (argv) => {
     if (!argv.size && argv.igify === false) {
-      console.log(
+      log(
+        "inform",
         "You must input the resize factor (e.g. 0.5) to use this command."
       );
     } else {
       if (argv.files) {
-        argv.files.forEach((imageFile) => {
-          whiteSpace(path.join(getConfig, imageFile), argv.size, argv.igify);
-        });
-      } else if (!argv.files && argv.directory) {
-        fs.readdirSync(
-          path.join(getConfig, "phofiles", argv.directory)
-        ).forEach((imageFile) => {
-          whiteSpace(
-            path.join(getConfig, "phofiles", argv.directory, imageFile),
+        promises = argv.files.map(async (imageFile) => {
+          await whiteSpace(
+            path.join(getConfig, imageFile),
             argv.size,
             argv.igify
           );
         });
+        await Promise.all(promises);
+        log(
+          "success",
+          "Border creation has been completed for specified folder."
+        );
+      } else if (!argv.files && argv.directory) {
+        const promises = fs
+          .readdirSync(path.join(getConfig, "phofiles", argv.directory))
+          .map(async (imageFile) => {
+            await whiteSpace(
+              path.join(getConfig, "phofiles", argv.directory, imageFile),
+              argv.size,
+              argv.igify
+            );
+          });
+
+        await Promise.all(promises);
+        log(
+          "success",
+          "Border creation has been completed for specified directory."
+        );
       } else {
-        console.log(
+        log(
+          "error",
           "No directory or image files have been specified with --directory and/or --files."
         );
       }

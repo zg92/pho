@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const log = require("../logUtils/consoleLogging");
 
 const copyFile = (files, directory, dest) => {
   files.forEach((imageFile) => {
@@ -9,9 +10,10 @@ const copyFile = (files, directory, dest) => {
       null,
       (err) => {
         if (err && err.code !== "EEXIST") {
-          console.log("Error:", err);
+          log("Error:", err);
         } else {
-          console.log(
+          log(
+            "success",
             `Image copied to ${path.join(
               getConfig,
               "/",

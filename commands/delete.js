@@ -1,5 +1,6 @@
 const deleteDir = require("../utilities/pathUtils/deleteDir");
 const deleteFile = require("../utilities/pathUtils/deleteFile");
+const log = require("../utilities/logUtils/consoleLogging");
 
 const del = {
   command: "delete [directory] [files]",
@@ -22,7 +23,7 @@ const del = {
 
   handler: (argv) => {
     if (argv.directory === "images" && !argv.files) {
-      console.log("The images directory cannot be deleted");
+      log("inform", "The images directory cannot be deleted");
     } else if (argv.directory !== "images" && !argv.files) {
       deleteDir(argv.directory);
     } else if (argv.files) {

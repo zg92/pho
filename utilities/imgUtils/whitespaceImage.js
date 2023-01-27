@@ -43,25 +43,27 @@ const createImageComposite = async (
 };
 
 const whiteSpace = async (img, size, ig) => {
-  try {
-    let { width, height } = await getWidthHeight(img);
+  if (path.parse(img).ext !== ".png") {
+    try {
+      let { width, height } = await getWidthHeight(img);
 
-    ig === true ? (size = 1) : size;
-    ig === true && height > width ? (width = width * 1.2) : width;
+      ig === true ? (size = 1) : size;
+      ig === true && height > width ? (width = width * 1.2) : width;
 
-    const backgroundImage = await createWhiteSpaceImage(width, height);
-    const resizedImage = await resizeImage(img, false, size, "bordered");
+      const backgroundImage = await createWhiteSpaceImage(width, height);
+      const resizedImage = await resizeImage(img, false, size, "bordered");
 
-    await createImageComposite(
-      backgroundImage,
-      resizedImage,
-      width,
-      height,
-      img,
-      ig
-    );
-  } catch (err) {
-    return handleError(err);
+      await createImageComposite(
+        backgroundImage,
+        resizedImage,
+        width,
+        height,
+        img,
+        ig
+      );
+    } catch (err) {
+      return handleError(err);
+    }
   }
 };
 

@@ -3,11 +3,12 @@ const path = require("path");
 const fs = require("fs");
 const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
+const log = require("../../utilities/logUtils/consoleLogging");
 
 const resize = {
   command: "resize [inplace] [directory] [files] [resize]",
   describe:
-    "Compress all files in a directory, a single file, or multiple files",
+    "Compress all .jpg files in a directory, a single file, or multiple files",
   builder: (yargs) => {
     yargs.option("inplace", {
       alias: "i",
@@ -40,7 +41,8 @@ const resize = {
   },
   handler: (argv) => {
     if (!argv.resize || argv.resize <= 0) {
-      console.log(
+      log(
+        "inform",
         "You must input the resize factor (e.g. 0.5) to use this command. Size factor must be greater than 0."
       );
     } else {
@@ -53,6 +55,10 @@ const resize = {
             "resized"
           );
         });
+        log(
+          "success",
+          "Resize operation creation has been completed for specified files."
+        );
       } else if (!argv.files && argv.directory) {
         fs.readdirSync(
           path.join(getConfig, "phofiles", argv.directory)
@@ -64,8 +70,13 @@ const resize = {
             "resized"
           );
         });
+        log(
+          "success",
+          "Resize operation creation has been completed for .jpg files in the specified directory."
+        );
       } else {
-        console.log(
+        log(
+          "inform",
           "No directory or image files have been specified with --directory and/or --files."
         );
       }

@@ -1,8 +1,9 @@
 const path = require("path");
 const copyDir = require("../utilities/pathUtils/copyDir");
 const copyFile = require("../utilities/pathUtils/copyFile");
-const config = require('../utilities/logUtils/log');
-const getConfig = config().get('baseDir')
+const config = require("../utilities/logUtils/log");
+const getConfig = config().get("baseDir");
+const log = require("../utilities/logUtils/consoleLogging");
 
 const exportFiles = {
   command: "export [directory] [files] [destination]",
@@ -12,7 +13,7 @@ const exportFiles = {
       alias: "d",
       describe: "Specifies the source directory to export from Pho",
       type: "string",
-      default: 'images'
+      default: "images",
     }),
       yargs.option("files", {
         alias: "f",
@@ -29,10 +30,18 @@ const exportFiles = {
 
   handler: (argv) => {
     if (argv.files) {
-      copyFile(argv.files, path.join(getConfig, 'phofiles', argv.directory), argv.destination);
+      copyFile(
+        argv.files,
+        path.join(getConfig, "phofiles", argv.directory),
+        argv.destination
+      );
     } else {
-      copyDir(path.join(getConfig, 'phofiles', argv.directory), argv.destination);
+      copyDir(
+        path.join(getConfig, "phofiles", argv.directory),
+        argv.destination
+      );
     }
+    log("success", `Files have been exported to: ${argv.destination}`);
   },
 };
 

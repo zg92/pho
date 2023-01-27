@@ -1,7 +1,8 @@
 const path = require("path");
 const checkPath = require("../utilities/pathUtils/checkPath");
-const config = require('../utilities/logUtils/log');
-const getConfig = config().get('baseDir')
+const config = require("../utilities/logUtils/log");
+const getConfig = config().get("baseDir");
+const log = require("../utilities/logUtils/consoleLogging");
 
 const {
   renameFileExecute,
@@ -35,7 +36,12 @@ const rename = {
   },
 
   handler: (argv) => {
-    const imagePreRename = path.join(getConfig, 'phofiles', "images", argv.image);
+    const imagePreRename = path.join(
+      getConfig,
+      "phofiles",
+      "images",
+      argv.image
+    );
 
     if (checkPath(imagePreRename)) {
       argv.add
@@ -44,7 +50,8 @@ const rename = {
             path.parse(imagePreRename).name + argv.name
           )
         : renameFileExecute(imagePreRename, argv.name);
-      console.log(
+      log(
+        "success",
         `${imagePreRename} has been renamed to ${
           argv.add
             ? renameFilePath(
@@ -55,7 +62,8 @@ const rename = {
         }`
       );
     } else {
-      console.log(
+      log(
+        "inform",
         `The provided image ${imagePreRename} name does not seem to exist`
       );
     }
