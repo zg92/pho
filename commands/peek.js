@@ -1,6 +1,8 @@
 const path = require("path");
 const getMetrics = require("../utilities/imgUtils/getMetrics");
 const getExif = require("../utilities/imgUtils/getExif");
+const config = require('../utilities/logUtils/log');
+const getConfig = config().get('baseDir')
 
 const peek = {
   peek: "peek [dirName] [extra] [files] [options]",
@@ -39,14 +41,14 @@ const peek = {
   handler: (argv) => {
     if (!argv.files) {
       getMetrics(
-        path.join(process.cwd(), 'phofiles', argv.dirName),
+        path.join(getConfig, 'phofiles', argv.dirName),
         argv.exif,
         argv.options
       );
     } else {
       argv.files.forEach((fileName) => {
         exifData = getExif(
-          path.join(process.cwd(), 'phofiles', argv.dirName, fileName),
+          path.join(getConfig, 'phofiles', argv.dirName, fileName),
           argv.options
         );
         console.log(`Here is the exif data you requested for ${fileName}:`);

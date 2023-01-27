@@ -13,7 +13,7 @@ const copyFile = (files, directory, dest) => {
         } else {
           console.log(
             `Image copied to ${path.join(
-              process.cwd(),
+              getConfig,
               "/",
               "files",
               "images",

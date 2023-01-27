@@ -1,5 +1,7 @@
 const path = require("path");
 const checkPath = require("../utilities/pathUtils/checkPath");
+const config = require('../utilities/logUtils/log');
+const getConfig = config().get('baseDir')
 
 const {
   renameFileExecute,
@@ -33,7 +35,7 @@ const rename = {
   },
 
   handler: (argv) => {
-    const imagePreRename = path.join(process.cwd(), 'phofiles', "images", argv.image);
+    const imagePreRename = path.join(getConfig, 'phofiles', "images", argv.image);
 
     if (checkPath(imagePreRename)) {
       argv.add

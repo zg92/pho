@@ -1,6 +1,8 @@
 const path = require("path");
 const copyDir = require("../utilities/pathUtils/copyDir");
 const copyFile = require("../utilities/pathUtils/copyFile");
+const config = require('../utilities/logUtils/log');
+const getConfig = config().get('baseDir')
 
 const exportFiles = {
   command: "export [directory] [files] [destination]",
@@ -27,9 +29,9 @@ const exportFiles = {
 
   handler: (argv) => {
     if (argv.files) {
-      copyFile(argv.files, path.join(process.cwd(), 'phofiles', argv.directory), argv.destination);
+      copyFile(argv.files, path.join(getConfig, 'phofiles', argv.directory), argv.destination);
     } else {
-      copyDir(path.join(process.cwd(), 'phofiles', argv.directory), argv.destination);
+      copyDir(path.join(getConfig, 'phofiles', argv.directory), argv.destination);
     }
   },
 };

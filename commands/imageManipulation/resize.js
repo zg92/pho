@@ -1,6 +1,8 @@
 const resizeImage = require("../../utilities/imgUtils/resizeImage");
 const path = require("path");
 const fs = require("fs");
+const config = require('../../utilities/logUtils/log');
+const getConfig = config().get('baseDir')
 
 const resize = {
   command: "resize [inplace] [directory] [files] [resize]",
@@ -45,17 +47,17 @@ const resize = {
       if (argv.files) {
         argv.files.forEach((imageFile) => {
           resizeImage(
-            path.join(process.cwd(), "phofiles", argv.directory, imageFile),
+            path.join(getConfig, "phofiles", argv.directory, imageFile),
             argv.inplace,
             argv.resize,
             "resized"
           );
         });
       } else if (!argv.files && argv.directory) {
-        fs.readdirSync(path.join(process.cwd(), "phofiles", argv.directory)).forEach(
+        fs.readdirSync(path.join(getConfig, "phofiles", argv.directory)).forEach(
           (imageFile) => {
             resizeImage(
-              path.join(process.cwd(), "phofiles", argv.directory, imageFile),
+              path.join(getConfig, "phofiles", argv.directory, imageFile),
               argv.inplace,
               argv.resize,
               "resized"

@@ -3,4 +3,4 @@
 - better filtering of exif data 
 - error handling for missing exif data
 
-
+- 

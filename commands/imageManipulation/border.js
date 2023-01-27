@@ -1,6 +1,8 @@
 const path = require("path");
 const whiteSpace = require("../../utilities/imgUtils/whitespaceImage");
 const fs = require("fs");
+const config = require('../../utilities/logUtils/log');
+const getConfig = config().get('baseDir')
 
 const border = {
   command: "border [inplace] [directory] [files] [size] [ig]",
@@ -39,11 +41,11 @@ const border = {
       alias: "ig",
       type: "boolean",
       describe: "Creates a whitespace 4x5 crop used for upload to IG.",
-      default: true,
+      default: false,
     });
   },
   handler: (argv) => {
-    if (!argv.size && !argv.igify) {
+    if (!argv.size) {
       console.log(
         "You must input the resize factor (e.g. 0.5) to use this command."
       );
@@ -51,16 +53,16 @@ const border = {
       if (argv.files) {
         argv.files.forEach((imageFile) => {
           whiteSpace(
-            path.join(process.cwd(), imageFile),
+            path.join(getConfig, imageFile),
             argv.size,
             argv.igify
           );
         });
       } else if (!argv.files && argv.directory) {
-        fs.readdirSync(path.join(process.cwd(), "phofiles", argv.directory)).forEach(
+        fs.readdirSync(path.join(getConfig, "phofiles", argv.directory)).forEach(
           (imageFile) => {
             whiteSpace(
-              path.join(process.cwd(), "phofiles", argv.directory, imageFile),
+              path.join(getConfig, "phofiles", argv.directory, imageFile),
               argv.size,
               argv.igify
             );

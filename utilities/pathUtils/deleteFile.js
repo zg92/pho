@@ -1,10 +1,12 @@
 const fs = require("fs");
-const checkPath = require("./checkPath");
+const checkPath = require("./checkPath")
 const path = require("path");
+const config = require('../logUtils/log');
+const getConfig = config().get('baseDir')
 
 const deleteFile = (filePath, argv) => {
   const filePathPreDeleted = path.join(
-    process.cwd(),
+    getConfig,
     "phofiles",
     argv.directory,
     filePath

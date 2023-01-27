@@ -11,8 +11,11 @@
   "author": "Zach Gordy",
   "license": "ISC",
   "dependencies": {
+    "configstore": "^5.0.1",
     "exif-parser": "^0.1.12",
+    "figlet": "^1.5.2",
     "jimp": "^0.16.2",
+    "prompts": "^2.4.2",
     "yargs": "^17.6.2"
   }
 }

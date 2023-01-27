@@ -3,6 +3,8 @@ const resizeImage = require("./resizeImage");
 const Jimp = require("jimp");
 const path = require("path");
 const handleError = require("../errUtils/errorHandler");
+const config = require('../logUtils/log');
+const getConfig = config().get('baseDir')
 
 
 const createWhiteSpaceImage = (width, height) => {
@@ -11,7 +13,7 @@ const createWhiteSpaceImage = (width, height) => {
 
 const createResizedImage = async (img, size) => {
   await resizeImage(img, false, size, "bordered");
-  return path.join(process.cwd(), "phofiles", "bordered", path.parse(img).base);
+  return path.join(getConfig, "phofiles", "bordered", path.parse(img).base);
 };
 
 const createImageComposite = (
@@ -26,7 +28,7 @@ const createImageComposite = (
 
   backgroundImage.composite(resizedImage, x, y);
   return backgroundImage.writeAsync(
-    path.join(process.cwd(), "phofiles", "bordered", path.parse(img).base)
+    path.join(getConfig, "phofiles", "bordered", path.parse(img).base)
   );
 };
 
@@ -35,8 +37,8 @@ const whiteSpace = async (img, size, ig) => {
 
     let { width, height } = await getWidthHeight(img);
 
-    ig ? size = 1.0 : size
-    ig && height > width ? width = width * 1.2 : width
+    ig === true ? size = 1.0 : size
+    ig === true && height > width ? width = width * 1.2 : width
 
     const backgroundImage = createWhiteSpaceImage(width, height);
     const image = await createResizedImage(img, size);

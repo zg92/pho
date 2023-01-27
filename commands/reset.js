@@ -2,6 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const deleteDir = require("../utilities/pathUtils/deleteDir");
 const initPho = require("../utilities/pathUtils/init");
+const config = require('../utilities/logUtils/log');
+const getConfig = config().get('baseDir')
 
 const reset = {
   command: "reset [directories] [keep]",
@@ -27,7 +29,7 @@ const reset = {
   handler: (argv) => {
 
     if (!argv.directories) {
-    dirs = fs.readdirSync(path.join(process.cwd(), 'phofiles'));
+    dirs = fs.readdirSync(path.join(getConfig, 'phofiles'));
     dirs.forEach(async (dirPathPreDeleted) => {
       if (argv.keep) {
         if (dirPathPreDeleted !== 'images') {
