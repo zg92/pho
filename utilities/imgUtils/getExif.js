@@ -34,6 +34,7 @@ const getExif = (img, options) => {
       const exifData = parser.parse();
       let { tags, imageSize } = exifData;
       tags = lowercaseKeys(tags);
+
       if (!options.includes("all")) {
         return getOptions({ tags, imageSize }, options);
       } else {

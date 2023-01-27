@@ -8,7 +8,7 @@ const log = require("../utilities/logUtils/consoleLogging");
 const peek = {
   peek: "peek [dirName] [extra] [files] [options]",
   describe:
-    "Peek at a directory and see metrics or a specific file data by including the `--files` option in conjuction with any specific fields you want to extract using `--option` and passing in an array.",
+    "Peek at a directory and see metrics or a specific .jpg image data by including the `--files` option in conjuction with any specific fields you want to extract using `--option` and passing in an array.",
   builder: (yargs) => {
     yargs
       .positional("dirName", {

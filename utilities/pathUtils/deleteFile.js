@@ -13,6 +13,7 @@ const deleteFile = (filePath, argv) => {
     argv.directory,
     filePath
   );
+
   if (checkPath(filePathPreDeleted)) {
     fs.unlink(filePathPreDeleted, (err) => {
       if (err) {

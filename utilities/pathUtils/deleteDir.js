@@ -7,6 +7,7 @@ const log = require("../logUtils/consoleLogging");
 
 const deleteDir = async (directory) => {
   const dirPathPreDeleted = path.join(getConfig, "phofiles", directory);
+
   if (checkPath(dirPathPreDeleted)) {
     fs.rmSync(dirPathPreDeleted, { recursive: true }, (err) => {
       if (err) {

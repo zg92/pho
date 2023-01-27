@@ -10,7 +10,7 @@ const colors = require("ansi-colors");
 const compress = {
   command: "compress [inplace] [directory] [files]",
   describe:
-    "Compress all files in a directory, a single file, or multiple files",
+    "Compress all .jpg files in a directory, a single file, or multiple files",
   builder: (yargs) => {
     yargs.option("inplace", {
       alias: "i",
