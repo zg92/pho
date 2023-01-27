@@ -3,7 +3,9 @@ const path = require("path");
 const fs = require("fs");
 const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
+const cliProgress = require("cli-progress");
 const log = require("../../utilities/logUtils/consoleLogging");
+const colors = require("ansi-colors");
 
 const resize = {
   command: "resize [inplace] [directory] [files] [resize]",
@@ -47,6 +49,17 @@ const resize = {
       );
     } else {
       if (argv.files) {
+        const progressBar = new cliProgress.SingleBar(
+          {
+            format:
+              "CLI Progress |" +
+              colors.green("{bar}") +
+              "| {percentage}% || {value}/{total} Chunks",
+          },
+          cliProgress.Presets.shades_classic
+        );
+        progressBar.start(argv.files.length, 0);
+
         argv.files.forEach((imageFile) => {
           resizeImage(
             path.join(getConfig, "phofiles", argv.directory, imageFile),
@@ -54,12 +67,27 @@ const resize = {
             argv.resize,
             "resized"
           );
+          progressBar.increment();
         });
+        progressBar.stop();
         log(
           "success",
           "Resize operation creation has been completed for specified files."
         );
       } else if (!argv.files && argv.directory) {
+        const len = fs.readdirSync(
+          path.join(getConfig, "phofiles", argv.directory)
+        ).length;
+        const progressBar = new cliProgress.SingleBar(
+          {
+            format:
+              "CLI Progress |" +
+              colors.green("{bar}") +
+              "| {percentage}% || {value}/{total} Chunks",
+          },
+          cliProgress.Presets.shades_classic
+        );
+        progressBar.start(len, 0);
         fs.readdirSync(
           path.join(getConfig, "phofiles", argv.directory)
         ).forEach((imageFile) => {
@@ -69,7 +97,9 @@ const resize = {
             argv.resize,
             "resized"
           );
+          progressBar.increment();
         });
+        progressBar.stop();
         log(
           "success",
           "Resize operation creation has been completed for .jpg files in the specified directory."

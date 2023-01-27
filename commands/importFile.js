@@ -3,7 +3,6 @@ const copyFile = require("../utilities/pathUtils/copyFile");
 const path = require("path");
 const config = require("../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
-const log = require("../utilities/logUtils/consoleLogging");
 
 const importFiles = {
   command: "import [directory] [files]",

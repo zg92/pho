@@ -1,8 +1,20 @@
 const fs = require("fs");
 const path = require("path");
+const handleError = require("../errUtils/errorHandler");
 const log = require("../logUtils/consoleLogging");
 
 const copyFile = (files, directory, dest) => {
+  const progressBar = new cliProgress.SingleBar(
+    {
+      format:
+        "CLI Progress |" +
+        colors.green("{bar}") +
+        "| {percentage}% || {value}/{total} Chunks",
+    },
+    cliProgress.Presets.shades_classic
+  );
+  progressBar.start(argv.files.length, 0);
+
   files.forEach((imageFile) => {
     fs.copyFileSync(
       path.join(directory, "/", imageFile),
@@ -10,7 +22,7 @@ const copyFile = (files, directory, dest) => {
       null,
       (err) => {
         if (err && err.code !== "EEXIST") {
-          log("Error:", err);
+          handleError(err);
         } else {
           log(
             "success",
@@ -25,7 +37,9 @@ const copyFile = (files, directory, dest) => {
         }
       }
     );
+    progressBar.increment();
   });
+  progressBar.stop();
 };
 
 module.exports = copyFile;

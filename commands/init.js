@@ -4,14 +4,14 @@ const checkPath = require("../utilities/pathUtils/checkPath.js");
 const config = require("../utilities/logUtils/log");
 const figlet = require("figlet");
 const log = require("../utilities/logUtils/consoleLogging");
-const chalk = require("chalk");
+const colors = require("ansi-colors");
 
 const init = {
   command: "init",
   describe: "Initialize program",
   handler: async () => {
     console.log(
-      chalk.blue.bold(
+      colors.blue.bold(
         figlet.textSync("Welcome to PHO", {
           font: "big",
           horizontalLayout: "default",
@@ -23,7 +23,7 @@ const init = {
     const baseDir = await prompts({
       type: "text",
       name: "value",
-      message: chalk.white.bold(
+      message: colors.white.bold(
         "What filepath do you want to create Pho's file system?"
       ),
     });

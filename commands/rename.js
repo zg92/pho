@@ -14,13 +14,13 @@ const rename = {
   describe:
     "Rename an existing file by passing in the file as the first argument, then the desired new name. The provided new name replaces the existing name by default, however the --a option enables you to append the end of the image's existing name.",
   builder: (yargs) => {
-    yargs.positional("image", {
+    yargs.option("image", {
       alias: "i",
       type: "string",
       describe: "The specific image you want to rename",
       nargs: 1,
     });
-    yargs.positional("name", {
+    yargs.option("name", {
       alias: "n",
       type: "string",
       describe: "The desired new name of the image path provided",

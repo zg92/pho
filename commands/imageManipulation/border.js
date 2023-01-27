@@ -4,6 +4,8 @@ const fs = require("fs");
 const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
 const log = require("../../utilities/logUtils/consoleLogging");
+const cliProgress = require("cli-progress");
+const colors = require("ansi-colors");
 
 const border = {
   command: "border [inplace] [directory] [files] [size] [ig]",
@@ -53,19 +55,44 @@ const border = {
       );
     } else {
       if (argv.files) {
+        const progressBar = new cliProgress.SingleBar(
+          {
+            format:
+              "CLI Progress |" +
+              colors.green("{bar}") +
+              "| {percentage}% || {value}/{total} Chunks",
+          },
+          cliProgress.Presets.shades_classic
+        );
+        progressBar.start(argv.files.length, 0);
         promises = argv.files.map(async (imageFile) => {
           await whiteSpace(
             path.join(getConfig, imageFile),
             argv.size,
             argv.igify
           );
+          progressBar.increment();
         });
         await Promise.all(promises);
+        progressBar.stop();
         log(
           "success",
           "Border creation has been completed for specified folder."
         );
       } else if (!argv.files && argv.directory) {
+        const len = fs.readdirSync(
+          path.join(getConfig, "phofiles", argv.directory)
+        ).length;
+        const progressBar = new cliProgress.SingleBar(
+          {
+            format:
+              "CLI Progress |" +
+              colors.green("{bar}") +
+              "| {percentage}% || {value}/{total} Chunks",
+          },
+          cliProgress.Presets.shades_classic
+        );
+        progressBar.start(len, 0);
         const promises = fs
           .readdirSync(path.join(getConfig, "phofiles", argv.directory))
           .map(async (imageFile) => {
@@ -74,9 +101,11 @@ const border = {
               argv.size,
               argv.igify
             );
+            progressBar.increment();
           });
 
         await Promise.all(promises);
+        progressBar.stop();
         log(
           "success",
           "Border creation has been completed for specified directory."

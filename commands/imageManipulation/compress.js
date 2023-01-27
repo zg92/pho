@@ -3,7 +3,9 @@ const path = require("path");
 const fs = require("fs");
 const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
+const cliProgress = require("cli-progress");
 const log = require("../../utilities/logUtils/consoleLogging");
+const colors = require("ansi-colors");
 
 const compress = {
   command: "compress [inplace] [directory] [files]",
@@ -35,6 +37,17 @@ const compress = {
   },
   handler: (argv) => {
     if (argv.files) {
+      const progressBar = new cliProgress.SingleBar(
+        {
+          format:
+            "CLI Progress |" +
+            colors.green("{bar}") +
+            "| {percentage}% || {value}/{total} Chunks",
+        },
+        cliProgress.Presets.shades_classic
+      );
+      progressBar.start(argv.files.length, 0);
+
       argv.files.forEach((imageFile) => {
         resizeImage(
           path.join(getConfig, argv.directory, imageFile),
@@ -42,9 +55,25 @@ const compress = {
           Number(0.6),
           "compressed"
         );
+        progressBar.increment();
       });
+      progressBar.stop();
       log("success", "Compression has been completed for specified files.");
     } else if (!argv.files && argv.directory) {
+      const len = fs.readdirSync(
+        path.join(getConfig, "phofiles", argv.directory)
+      ).length;
+      const progressBar = new cliProgress.SingleBar(
+        {
+          format:
+            "CLI Progress |" +
+            colors.green("{bar}") +
+            "| {percentage}% || {value}/{total} Chunks",
+        },
+        cliProgress.Presets.shades_classic
+      );
+      progressBar.start(len, 0);
+
       fs.readdirSync(path.join(getConfig, "phofiles", argv.directory)).forEach(
         (imageFile) => {
           resizeImage(
@@ -53,8 +82,10 @@ const compress = {
             Number(0.6),
             "compressed"
           );
+          progressBar.increment();
         }
       );
+      progressBar.stop();
       log(
         "success",
         "Compression has been completed for specified directories."

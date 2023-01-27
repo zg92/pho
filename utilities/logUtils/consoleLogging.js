@@ -1,13 +1,13 @@
-const chalk = require("chalk");
+const colors = require("ansi-colors");
 
 const log = (type, message) => {
   switch (type) {
     case "success":
-      return console.log(chalk.green.bold(message));
+      return console.log(colors.green.bold(message));
     case "inform":
-      return console.log(chalk.yellow.bold(message));
+      return console.log(colors.yellow.bold(message));
     case "error":
-      return console.log(chalk.red.bold(message));
+      return console.log(colors.red.bold(message));
   }
 };
 
