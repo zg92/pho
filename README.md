@@ -1,6 +1,12 @@
 # Pho
 
-A command line interface (CLI) for photographers to manage their image post-processing.
+Pho is a command line interface (CLI) for photographers to manage their image post-processing. Pho enables simple importing, modification, and exporting of files. Currently, image modification is only supported for `.jpg` files.
+
+A few example use cases are:
+
+1. Adding a border around images in bulk
+2. Compressing or resizing images in bulk
+3. Getting filtered EXIF data at scale
 
 ## Installation
 
@@ -14,7 +20,9 @@ To install Pho:
 
 Run `pho.js init` to initialize program and create a directory for importing, exporting, and working with images.
 
-All commands can be performed through using `pho <command>`. The following commands are supported:
+All commands can be performed through using `pho <command>`. Use `pho --help` or `pho <command> --help` to get more details about available commands and options.
+
+The following commands are supported:
 
 ### Moving files in and out of Pho:
 
