@@ -18,7 +18,7 @@ To install Pho:
 
 ## Usage
 
-Run `pho.js init` to initialize program and create a directory for importing, exporting, and working with images.
+Run `pho init` to initialize program and create a directory for importing, exporting, and working with images.
 
 All commands can be performed through using `pho <command>`. Use `pho --help` or `pho <command> --help` to get more details about available commands and options.
 
