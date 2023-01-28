@@ -45,7 +45,7 @@ The following commands are supported:
 - `pho delete [directory] [files]`: Delete an existing file or directory within the working directory.
 - `pho reset [directories] [keep]`: Optional argument enabling you to specify the directories you would like to reset.
 
-## Dependencies:
+## Dependencies
 
 Pho requires the following dependencies to run:
 
