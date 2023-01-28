@@ -41,9 +41,8 @@ const reset = {
       });
     } else {
       argv.directories.forEach(async (dirPathPreDeleted) => {
-        if (dirPathPreDeleted !== "images") {
-          deleteDir(dirPathPreDeleted);
-        }
+        deleteDir(dirPathPreDeleted);
+        initPho();
       });
     }
     log("success", "All directories have been reset.");

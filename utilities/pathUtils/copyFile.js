@@ -2,6 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const handleError = require("../errUtils/errorHandler");
 const log = require("../logUtils/consoleLogging");
+const colors = require("ansi-colors");
+const cliProgress = require("cli-progress");
 
 const copyFile = (files, directory, dest) => {
   const progressBar = new cliProgress.SingleBar(
@@ -13,7 +15,7 @@ const copyFile = (files, directory, dest) => {
     },
     cliProgress.Presets.shades_classic
   );
-  progressBar.start(argv.files.length, 0);
+  progressBar.start(files.length, 0);
 
   files.forEach((imageFile) => {
     fs.copyFileSync(

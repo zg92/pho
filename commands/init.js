@@ -24,7 +24,7 @@ const init = {
       type: "text",
       name: "value",
       message: colors.white.bold(
-        "What filepath do you want to create Pho's file system?"
+        "Which filepath do you want to create Pho's file system at?"
       ),
     });
 

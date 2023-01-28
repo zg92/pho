@@ -19,7 +19,7 @@ const getMetrics = (customPath, extraData, options) => {
     });
     log("inform", `${customPath} has ${c} files`);
     log("inform", "The files are:");
-    fileList.forEach((file) => log("green", file));
+    fileList.forEach((file) => console.log(JSON.stringify(file)));
   } else {
     log("inform", "The provided path does not exist");
   }
