@@ -5,9 +5,10 @@ const handleError = require("../errUtils/errorHandler");
 const sharp = require("sharp");
 const path = require("path");
 const log = require("../logUtils/consoleLogging");
+const { onlyJpgFilter } = require("../pathUtils/imgExtCheck");
 
 const resizeImage = async (img, dest, newDim, operation) => {
-  if (path.parse(img).ext !== ".png") {
+  if (onlyJpgFilter(img)) {
     if (checkPath(img)) {
       try {
         const { height, width } = await getWidthHeight(img);

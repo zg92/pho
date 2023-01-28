@@ -6,39 +6,35 @@ const getConfig = config().get("baseDir");
 const log = require("../../utilities/logUtils/consoleLogging");
 const cliProgress = require("cli-progress");
 const colors = require("ansi-colors");
+const commandJSON = require("../commandData.json");
 
 const border = {
-  command: "border [inplace] [directory] [files] [size] [ig]",
-  describe:
-    "Compress all .jpg files in a directory, a single file, or multiple files",
+  command: commandJSON.border.command,
+  describe: commandJSON.border.description,
   builder: (yargs) => {
     yargs.option("inplace", {
       alias: "i",
       type: "boolean",
-      describe:
-        "Flag that lets you perform the compressor operation within the same folder as the specified --directory or --file. By default this value is set to false, so a copy folder will be created containing the processed photos.",
+      describe: commandJSON.border.arguments.inplaceDesc,
       default: false,
       nargs: 1,
     }),
       yargs.option("directory", {
         alias: "d",
         type: "string",
-        describe:
-          "Optional parameter that will perform the image resize on an entire directory. If the --file option is also set, the `--directory` will be used to locate the target --file(s).",
+        describe: commandJSON.border.arguments.directoryDesc,
         default: "images",
         nargs: 1,
       }),
       yargs.option("files", {
         alias: "f",
         type: "array",
-        describe:
-          "Optional parameter that will perform the image resize on the image(s) specified. A single or multiple image files can be entered.",
+        describe: commandJSON.border.arguments.filesDesc,
       }),
       yargs.option("size", {
         alias: "s",
         type: "number",
-        describe:
-          "Required parameter that lets you set the percentage you want to resize the image by. Anything greater than 1 will crop the output image and increase the images width and height.",
+        describe: commandJSON.border.arguments.sizeDesc,
       });
     yargs.option("igify", {
       alias: "ig",
@@ -60,7 +56,7 @@ const border = {
             format:
               "CLI Progress |" +
               colors.green("{bar}") +
-              "| {percentage}% || {value}/{total} Chunks",
+              "| {percentage}% || {value}/{total} Files",
           },
           cliProgress.Presets.shades_classic
         );
@@ -88,7 +84,7 @@ const border = {
             format:
               "CLI Progress |" +
               colors.green("{bar}") +
-              "| {percentage}% || {value}/{total} Chunks",
+              "| {percentage}% || {value}/{total} Files",
           },
           cliProgress.Presets.shades_classic
         );

@@ -1,30 +1,41 @@
 const fs = require("fs");
-const path = require("path");
 const copyFile = require("./copyFile");
 const log = require("../logUtils/consoleLogging");
+const { checkFileExt } = require("./imgExtCheck");
+const ProgressBar = require("../processUtils/processBarProcess");
+const getDirLength = require("./getDirLength");
 
-const copyDir = (directory, destination) => {
-  returnFiles = { copied: [], notCopied: [] };
-  c = 0;
-  fs.readdirSync(directory).forEach((file) => {
-    const fileType = path.parse(file).ext;
-    if (
-      fileType.toLowerCase() === ".jpg" ||
-      fileType.toLowerCase() === ".png" ||
-      fileType.toLowerCase() === ".jpeg"
-    ) {
-      copyFile([file], directory, destination);
-      returnFiles.copied.push(file);
-      c++;
+const copyDirProcess = async (directory, destination, outputData, Progress) => {
+  const files = fs.readdirSync(directory);
+  Progress.start();
+  for (const file of files) {
+    if (checkFileExt(file)) {
+      await copyFile([file], directory, destination);
+      outputData.copied.push(file);
     } else {
-      returnFiles.notCopied.push(file);
+      outputData.notCopied.push(file);
     }
-  });
-  log("success", `${c} files have been copied.`);
+    Progress.increment();
+  }
+  Progress.stop();
+};
+
+const copyDirLogging = (returnFiles) => {
+  log("success", `${returnFiles.copied.length} files have been copied.`);
   log("inform", `The files copied were: `);
   console.log(returnFiles.copied);
   log("error", "The following files could not be copied: ");
   console.log(returnFiles.notCopied);
+};
+
+const copyDir = async (directory, destination) => {
+  const returnFiles = { copied: [], notCopied: [] };
+  const Progress = new ProgressBar(
+    "Copying Directory",
+    getDirLength(directory)
+  );
+  await copyDirProcess(directory, destination, returnFiles, Progress);
+  copyDirLogging(returnFiles);
 };
 
 module.exports = copyDir;

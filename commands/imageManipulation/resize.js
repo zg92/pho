@@ -6,39 +6,35 @@ const getConfig = config().get("baseDir");
 const cliProgress = require("cli-progress");
 const log = require("../../utilities/logUtils/consoleLogging");
 const colors = require("ansi-colors");
+const commandJSON = require("../commandData.json");
 
 const resize = {
-  command: "resize [inplace] [directory] [files] [resize]",
-  describe:
-    "Compress all .jpg files in a directory, a single file, or multiple files",
+  command: commandJSON.resize.command,
+  describe: commandJSON.resize.description,
   builder: (yargs) => {
     yargs.option("inplace", {
       alias: "i",
       type: "boolean",
-      describe:
-        "Flag that lets you perform the compressor operation within the same folder as the specified --directory or --file. By default this value is set to false, so a copy folder will be created containing the processed photos.",
+      describe: commandJSON.resize.arguments.inplaceDesc,
       default: false,
       nargs: 1,
     }),
       yargs.option("directory", {
         alias: "d",
         type: "string",
-        describe:
-          "Optional parameter that will perform the image resize on an entire directory. If the --file option is also set, the `--directory` will be used to locate the target --file(s).",
+        describe: commandJSON.resize.arguments.directoryDesc,
         default: "images",
         nargs: 1,
       }),
       yargs.option("files", {
         alias: "f",
         type: "array",
-        describe:
-          "Optional parameter that will perform the image resize on the image(s) specified. A single or multiple image files can be entered.",
+        describe: commandJSON.resize.arguments.filesDesc,
       }),
       yargs.option("resize", {
         alias: "r",
         type: "number",
-        describe:
-          "required parameter that lets you set the percentage you want to resize the image by.",
+        describe: commandJSON.resize.arguments.resizeDesc,
       });
   },
   handler: (argv) => {
@@ -54,7 +50,7 @@ const resize = {
             format:
               "CLI Progress |" +
               colors.green("{bar}") +
-              "| {percentage}% || {value}/{total} Chunks",
+              "| {percentage}% || {value}/{total} Files",
           },
           cliProgress.Presets.shades_classic
         );
@@ -83,7 +79,7 @@ const resize = {
             format:
               "CLI Progress |" +
               colors.green("{bar}") +
-              "| {percentage}% || {value}/{total} Chunks",
+              "| {percentage}% || {value}/{total} Files",
           },
           cliProgress.Presets.shades_classic
         );

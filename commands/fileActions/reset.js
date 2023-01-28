@@ -1,26 +1,24 @@
 const fs = require("fs");
 const path = require("path");
-const deleteDir = require("../utilities/pathUtils/deleteDir");
-const initPho = require("../utilities/pathUtils/init");
-const config = require("../utilities/logUtils/log");
+const deleteDir = require("../../utilities/pathUtils/deleteDir");
+const initPho = require("../../utilities/pathUtils/init");
+const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
-const log = require("../utilities/logUtils/consoleLogging");
+const log = require("../../utilities/logUtils/consoleLogging");
+const commandJSON = require("../commandData.json");
 
 const reset = {
-  command: "reset [directories] [keep]",
-  describe:
-    "Rename an existing file by passing in the file as the first argument, then the desired new name. The provided new name replaces the existing name by default, however the --a option enables you to append the end of the image's existing name.",
+  command: commandJSON.reset.command,
+  describe: commandJSON.reset.description,
   builder: (yargs) => {
     yargs.option("directories", {
       alias: "d",
-      describe:
-        "Optional argument enabling you to specify the directories you would like to reset.",
+      describe: commandJSON.reset.arguments.directoriesDesc,
       type: "array",
     }),
       yargs.option("keep", {
         alias: "k",
-        describe:
-          "By default resetting Pho will retain the images in the images directory. Setting --keep to false will remove all content in the images directory.",
+        describe: commandJSON.reset.arguments.keepDesc,
         type: "boolean",
         default: true,
       });

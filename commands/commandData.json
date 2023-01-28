@@ -1,0 +1,99 @@
+{
+"delete": {
+    "command": "delete [directory] [files]",
+    "description": "Delete an existing file or directory within the working directory",
+    "arguments": {
+        "directoryDesc": "Specify the directory that should be deleted. By default, if no --file argument is passed, the entire directory will be deleted. Otherwise, this argument will be used to located the images specified in --files for deletion.",
+        "filesDesc": "Specify the file(s) that should be deleted. By default the image directory will be used, however if a --directory is specified, it will use the specified directory instead."
+    }
+},
+
+"exportFiles": {
+    "command": "export [directory] [files] [destination]", 
+    "description": "Export files from a Pho directory to an external directory.",
+    "arguments": {
+        "directoryDesc": "Specifies the source directory to export from Pho",
+        "filesDesc": "Option to pick specific files from the --directory used.",
+        "destinationDesc": "Specifies the destination directory you want to export images into."
+    }
+},
+
+"importFiles": {
+    "command": "import [directory] [files]",
+    "description": "Import files from a local file into a directory in Pho.",
+    "arguments": {
+        "directoryDesc": "Specifies the source directory to import into Pho",
+        "filesDesc": "Option to pick specific files from the --directory used."
+    }
+},
+
+"init": {
+    "command": "init",
+    "description": "Initialize program",
+    "arguments": {
+    }
+},
+
+"peek": {
+    "command": "peek [directory] [extra] [files] [options]",
+    "description": "Peek at a directory and see metrics or a specific .jpg image data by including the `--files` option in conjuction with any specific fields you want to extract using `--option` and passing in an array.",
+    "arguments": {
+        "directoryDesc": "Specify the directory you want to peek at",
+        "exifDesc": "Specify if you would like returned files from the directory to include exif information (this arg is not considered when peeking at a specific file using --files).",
+        "filesDesc": "Specify the file name (e.g. file.jpg) you want to get the exif data from.",
+        "optionsDesc": "If you use the file arg, --options specify what exif data you want to retrieve by passing the needed info's name seperated by commas with no spacing. Options can be passed in all lowercase or using capitalization shown in the raw exif results."
+    }
+},
+
+"rename": {
+    "command": "rename [file] [name] [add]",
+    "description": "Rename an existing file by passing in the file as the first argument, then the desired new name. The provided new name replaces the existing name by default, however the --a option enables you to append the end of the image's existing name.",
+    "arguments": {
+        "fileDesc": "The specific image you want to rename",
+        "newNameDesc": "The desired new name of the image path provided",
+        "addDesc": "Option that changes renaming behevior to append the provided name to the end of image's current name. Default behevior is to replace the image name."
+    }
+},
+
+"reset": {
+    "command": "reset [directories] [keep]",
+    "description": "Optional argument enabling you to specify the directories you would like to reset.",
+    "arguments": {
+        "directoriesDesc": "Optional argument enabling you to specify the directories you would like to reset.",
+        "keepDesc": "By default resetting Pho will retain the images in the images directory. Setting --keep to false will remove all content in the images directory."
+    }
+},
+"border": {
+    "command": "border [inplace] [directory] [files] [size] [ig]",
+    "description":  "Compress all .jpg files in a directory, a single file, or multiple files",
+    "arguments": {
+        "inplaceDesc": "Flag that lets you perform the compressor operation within the same folder as the specified --directory or --file. By default this value is set to false, so a copy folder will be created containing the processed photos.",
+        "directoryDesc": "Optional parameter that will perform the image resize on an entire directory. If the --file option is also set, the `--directory` will be used to locate the target --file(s).",
+        "filesDesc": "Optional parameter that will perform the image resize on the image(s) specified. A single or multiple image files can be entered.",
+        "sizeDesc": "Required parameter that lets you set the percentage you want to resize the image by. Anything greater than 1 will crop the output image and increase the images width and height.",
+        "igifyDesc": "Creates a whitespace 4x5 crop used for upload to IG."
+    }
+},
+"compress": {
+    "command": "compress [inplace] [directory] [files]",
+    "description": "Compress all .jpg files in a directory, a single file, or multiple files",
+    "arguments": {
+        "inplaceDesc": "Flag that lets you perform the compressor operation in place. By default this value is set to false, so a copy folder will be created containing the processed photos.",
+        "directoryDesc": "Optional parameter that will perform the image compression on an entire directory. If the --file option is also set, the `--directory` will be used to locate the target --file(s).",
+        "filesDesc": "Optional parameter that will perform the image compression on the image(s) specified. A single or multiple image files can be entered."
+
+    }
+},
+"resize": {
+    "command": "resize [inplace] [directory] [files] [resize]",
+    "description":  "Compress all .jpg files in a directory, a single file, or multiple files",
+    "arguments": {
+        "inplaceDesc": "Flag that lets you perform the compressor operation within the same folder as the specified --directory or --file. By default this value is set to false, so a copy folder will be created containing the processed photos.",
+        "directoryDesc": "Optional parameter that will perform the image resize on an entire directory. If the --file option is also set, the `--directory` will be used to locate the target --file(s).",
+        "fileDesc": "Optional parameter that will perform the image resize on the image(s) specified. A single or multiple image files can be entered.",
+        "resizeDesc": "required parameter that lets you set the percentage you want to resize the image by"
+    }
+}
+
+
+}

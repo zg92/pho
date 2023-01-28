@@ -1,47 +1,46 @@
 const path = require("path");
-const checkPath = require("../utilities/pathUtils/checkPath");
-const config = require("../utilities/logUtils/log");
+const checkPath = require("../../utilities/pathUtils/checkPath");
+const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
-const log = require("../utilities/logUtils/consoleLogging");
+const log = require("../../utilities/logUtils/consoleLogging");
+const commandJSON = require("../commandData.json");
 
 const {
   renameFileExecute,
   renameFilePath,
-} = require("../utilities/pathUtils/renameFile");
+} = require("../../utilities/pathUtils/renameFile");
 
 const rename = {
-  command: "rename [image] [name] [add]",
-  describe:
-    "Rename an existing file by passing in the file as the first argument, then the desired new name. The provided new name replaces the existing name by default, however the --a option enables you to append the end of the image's existing name.",
+  command: commandJSON.rename.command,
+  describe: commandJSON.rename.description,
   builder: (yargs) => {
-    yargs.option("image", {
-      alias: "i",
+    yargs.option("file", {
+      alias: "f",
       type: "string",
-      describe: "The specific image you want to rename",
+      describe: commandJSON.rename.arguments.fileDesc,
       nargs: 1,
     });
-    yargs.option("name", {
+    yargs.option("newName", {
       alias: "n",
       type: "string",
-      describe: "The desired new name of the image path provided",
+      describe: commandJSON.rename.arguments.newNameDesc,
       nargs: 1,
     });
     yargs.option("add", {
       alias: "a",
-      describe:
-        "Option that changes renaming behevior to append the provided name to the end of image's current name. Default behevior is to replace the image name.",
+      describe: commandJSON.rename.arguments.addDesc,
       type: "boolean",
       default: false,
     });
   },
 
   handler: (argv) => {
-    if (argv.name && argv.image) {
+    if (argv.name && argv.file) {
       const imagePreRename = path.join(
         getConfig,
         "phofiles",
         "images",
-        argv.image
+        argv.file
       );
 
       if (checkPath(imagePreRename)) {

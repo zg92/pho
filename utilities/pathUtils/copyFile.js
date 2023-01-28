@@ -2,21 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const handleError = require("../errUtils/errorHandler");
 const log = require("../logUtils/consoleLogging");
-const colors = require("ansi-colors");
-const cliProgress = require("cli-progress");
 
-const copyFile = (files, directory, dest) => {
-  const progressBar = new cliProgress.SingleBar(
-    {
-      format:
-        "CLI Progress |" +
-        colors.green("{bar}") +
-        "| {percentage}% || {value}/{total} Chunks",
-    },
-    cliProgress.Presets.shades_classic
-  );
-  progressBar.start(files.length, 0);
-
+const copyFileOption = async (directory, dest, files) => {
   files.forEach((imageFile) => {
     fs.copyFileSync(
       path.join(directory, "/", imageFile),
@@ -39,9 +26,13 @@ const copyFile = (files, directory, dest) => {
         }
       }
     );
-    progressBar.increment();
   });
-  progressBar.stop();
+  return;
+};
+
+const copyFile = async (files, directory, dest) => {
+  await copyFileOption(directory, dest, files);
+  return;
 };
 
 module.exports = copyFile;

@@ -1,21 +1,22 @@
-const copyDir = require("../utilities/pathUtils/copyDir");
-const copyFile = require("../utilities/pathUtils/copyFile");
+const copyDir = require("../../utilities/pathUtils/copyDir");
+const copyFile = require("../../utilities/pathUtils/copyFile");
 const path = require("path");
-const config = require("../utilities/logUtils/log");
+const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
+const commandJSON = require("../commandData.json");
 
 const importFiles = {
-  command: "import [directory] [files]",
-  describe: "Import files from a local file into a directory in Pho.",
+  command: commandJSON.importFiles.command,
+  describe: commandJSON.importFiles.description,
   builder: (yargs) => {
     yargs.option("directory", {
       alias: "d",
-      describe: "Specifies the source directory to import into Pho",
+      describe: commandJSON.importFiles.arguments.directoryDesc,
       type: "string",
     }),
       yargs.option("files", {
         alias: "f",
-        describe: "Option to pick specific files from the --directory used.",
+        describe: commandJSON.importFiles.arguments.filesDesc,
         type: "array",
       });
   },

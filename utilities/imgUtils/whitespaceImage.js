@@ -4,6 +4,7 @@ const sharp = require("sharp");
 const path = require("path");
 const handleError = require("../errUtils/errorHandler");
 const config = require("../logUtils/log");
+const { onlyJpgFilter } = require("../pathUtils/imgExtCheck");
 const getConfig = config().get("baseDir");
 
 const createWhiteSpaceImage = async (width, height) => {
@@ -43,7 +44,7 @@ const createImageComposite = async (
 };
 
 const whiteSpace = async (img, size, ig) => {
-  if (path.parse(img).ext !== ".png") {
+  if (onlyJpgFilter(img)) {
     try {
       let { width, height } = await getWidthHeight(img);
 

@@ -1,14 +1,15 @@
 const prompts = require("prompts");
-const initPho = require("../utilities/pathUtils/init.js");
-const checkPath = require("../utilities/pathUtils/checkPath.js");
-const config = require("../utilities/logUtils/log");
+const initPho = require("../../utilities/pathUtils/init");
+const checkPath = require("../../utilities/pathUtils/checkPath.js");
+const config = require("../../utilities/logUtils/log");
 const figlet = require("figlet");
-const log = require("../utilities/logUtils/consoleLogging");
+const log = require("../../utilities/logUtils/consoleLogging");
 const colors = require("ansi-colors");
+const commandJSON = require("../commandData.json");
 
 const init = {
-  command: "init",
-  describe: "Initialize program",
+  command: commandJSON.init.command,
+  describe: commandJSON.init.description,
   handler: async () => {
     console.log(
       colors.blue.bold(

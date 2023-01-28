@@ -3,6 +3,6 @@
 const yargs = require("yargs");
 
 yargs
-  .commandDir("../commands")
+  .commandDir("../commands/fileActions")
   .commandDir("../commands/imageManipulation")
   .help().argv;

@@ -6,33 +6,30 @@ const getConfig = config().get("baseDir");
 const cliProgress = require("cli-progress");
 const log = require("../../utilities/logUtils/consoleLogging");
 const colors = require("ansi-colors");
+const commandJSON = require("../commandData.json");
 
 const compress = {
-  command: "compress [inplace] [directory] [files]",
-  describe:
-    "Compress all .jpg files in a directory, a single file, or multiple files",
+  command: commandJSON.compress.command,
+  describe: commandJSON.compress.description,
   builder: (yargs) => {
     yargs.option("inplace", {
       alias: "i",
       type: "boolean",
-      describe:
-        "Flag that lets you perform the compressor operation in place. By default this value is set to false, so a copy folder will be created containing the processed photos.",
+      describe: commandJSON.compress.arguments.inplaceDesc,
       default: false,
       nargs: 1,
     }),
       yargs.option("directory", {
         alias: "d",
         type: "string",
-        describe:
-          "Optional parameter that will perform the image compression on an entire directory. If the --file option is also set, the `--directory` will be used to locate the target --file(s).",
+        describe: commandJSON.compress.arguments.directoryDesc,
         default: "images",
         nargs: 1,
       }),
       yargs.option("files", {
         alias: "f",
         type: "array",
-        describe:
-          "Optional parameter that will perform the image compression on the image(s) specified. A single or multiple image files can be entered.",
+        describe: commandJSON.compress.arguments.filesDesc,
       });
   },
   handler: (argv) => {
@@ -42,7 +39,7 @@ const compress = {
           format:
             "CLI Progress |" +
             colors.green("{bar}") +
-            "| {percentage}% || {value}/{total} Chunks",
+            "| {percentage}% || {value}/{total} Files",
         },
         cliProgress.Presets.shades_classic
       );

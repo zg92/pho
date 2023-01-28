@@ -1,42 +1,42 @@
 const path = require("path");
-const copyDir = require("../utilities/pathUtils/copyDir");
-const copyFile = require("../utilities/pathUtils/copyFile");
-const config = require("../utilities/logUtils/log");
+const copyDir = require("../../utilities/pathUtils/copyDir");
+const copyFile = require("../../utilities/pathUtils/copyFile");
+const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
-const log = require("../utilities/logUtils/consoleLogging");
+const log = require("../../utilities/logUtils/consoleLogging");
+const commandJSON = require("../commandData.json");
 
 const exportFiles = {
-  command: "export [directory] [files] [destination]",
-  describe: "Export files from a Pho directory to an external directory.",
+  command: commandJSON.exportFiles.command,
+  describe: commandJSON.exportFiles.description,
   builder: (yargs) => {
     yargs.option("directory", {
       alias: "d",
-      describe: "Specifies the source directory to export from Pho",
+      describe: commandJSON.exportFiles.arguments.directoryDesc,
       type: "string",
       default: "images",
     }),
       yargs.option("files", {
         alias: "f",
-        describe: "Option to pick specific files from the --directory used.",
+        describe: commandJSON.exportFiles.arguments.filesDesc,
         type: "array",
       }),
       yargs.option("destination", {
         alias: "dest",
-        describe:
-          "Specifies the destination directory you want to export images into.",
+        describe: commandJSON.exportFiles.arguments.destinationDesc,
         type: "string",
       });
   },
 
-  handler: (argv) => {
+  handler: async (argv) => {
     if (argv.files) {
-      copyFile(
+      await copyFile(
         argv.files,
         path.join(getConfig, "phofiles", argv.directory),
         argv.destination
       );
     } else {
-      copyDir(
+      await copyDir(
         path.join(getConfig, "phofiles", argv.directory),
         argv.destination
       );
