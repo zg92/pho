@@ -21,4 +21,14 @@ class ProgressBar {
   }
 }
 
-module.exports = ProgressBar;
+const process = async (name, dir, len, callback) => {
+  const Progress = new ProgressBar(name, len);
+  Progress.start();
+  for (const imageFile of dir) {
+    await callback(imageFile);
+    Progress.increment();
+  }
+  Progress.stop();
+};
+
+module.exports = { ProgressBar, process };

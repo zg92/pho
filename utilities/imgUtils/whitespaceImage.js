@@ -7,7 +7,7 @@ const config = require("../logUtils/log");
 const { onlyJpgFilter } = require("../pathUtils/imgExtCheck");
 const getConfig = config().get("baseDir");
 
-const createWhiteSpaceImage = async (width, height) => {
+const createBorderImage = async (width, height) => {
   return sharp({
     create: {
       width: Math.round(width),
@@ -43,7 +43,7 @@ const createImageComposite = async (
     .toFile(path.join(getConfig, "phofiles", "bordered", path.parse(img).base));
 };
 
-const whiteSpace = async (img, size, ig) => {
+const borderImage = async (img, size, ig) => {
   if (onlyJpgFilter(img)) {
     try {
       let { width, height } = await getWidthHeight(img);
@@ -51,7 +51,7 @@ const whiteSpace = async (img, size, ig) => {
       ig === true ? (size = 1) : size;
       ig === true && height > width ? (width = width * 1.2) : width;
 
-      const backgroundImage = await createWhiteSpaceImage(width, height);
+      const backgroundImage = await createBorderImage(width, height);
       const resizedImage = await resizeImage(img, false, size, "bordered");
 
       await createImageComposite(
@@ -68,4 +68,4 @@ const whiteSpace = async (img, size, ig) => {
   }
 };
 
-module.exports = whiteSpace;
+module.exports = borderImage;

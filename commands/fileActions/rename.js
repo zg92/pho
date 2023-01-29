@@ -35,7 +35,7 @@ const rename = {
   },
 
   handler: (argv) => {
-    if (argv.name && argv.file) {
+    if (argv.newName && argv.file) {
       const imagePreRename = path.join(
         getConfig,
         "phofiles",
@@ -47,7 +47,7 @@ const rename = {
         argv.add
           ? renameFileExecute(
               imagePreRename,
-              path.parse(imagePreRename).name + argv.name
+              path.parse(imagePreRename).name + argv.newName
             )
           : renameFileExecute(imagePreRename, argv.name);
         log(
@@ -56,9 +56,9 @@ const rename = {
             argv.add
               ? renameFilePath(
                   imagePreRename,
-                  path.parse(imagePreRename).name + argv.name
+                  path.parse(imagePreRename).name + argv.newName
                 )
-              : renameFilePath(imagePreRename, argv.name)
+              : renameFilePath(imagePreRename, argv.newName)
           }`
         );
       } else {

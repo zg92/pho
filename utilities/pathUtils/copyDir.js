@@ -2,22 +2,26 @@ const fs = require("fs");
 const copyFile = require("./copyFile");
 const log = require("../logUtils/consoleLogging");
 const { checkFileExt } = require("./imgExtCheck");
-const ProgressBar = require("../processUtils/processBarProcess");
+const { ProgressBar } = require("../processUtils/processBarProcess");
 const getDirLength = require("./getDirLength");
+const handleError = require("../errUtils/errorHandler");
 
 const copyDirProcess = async (directory, destination, outputData, Progress) => {
-  const files = fs.readdirSync(directory);
-  Progress.start();
-  for (const file of files) {
-    if (checkFileExt(file)) {
-      await copyFile([file], directory, destination);
-      outputData.copied.push(file);
-    } else {
-      outputData.notCopied.push(file);
+  try {
+    Progress.start();
+    for (const file of fs.readdirSync(directory)) {
+      if (checkFileExt(file)) {
+        await copyFile([file], directory, destination);
+        outputData.copied.push(file);
+      } else {
+        outputData.notCopied.push(file);
+      }
+      Progress.increment();
     }
-    Progress.increment();
+    Progress.stop();
+  } catch (err) {
+    handleError(err);
   }
-  Progress.stop();
 };
 
 const copyDirLogging = (returnFiles) => {

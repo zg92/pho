@@ -3,10 +3,10 @@ const path = require("path");
 const fs = require("fs");
 const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
-const cliProgress = require("cli-progress");
 const log = require("../../utilities/logUtils/consoleLogging");
-const colors = require("ansi-colors");
 const commandJSON = require("../commandData.json");
+const { process } = require("../../utilities/processUtils/processBarProcess");
+const getDirLength = require("../../utilities/pathUtils/getDirLength");
 
 const compress = {
   command: commandJSON.compress.command,
@@ -32,57 +32,23 @@ const compress = {
         describe: commandJSON.compress.arguments.filesDesc,
       });
   },
-  handler: (argv) => {
+  handler: async (argv) => {
     if (argv.files) {
-      const progressBar = new cliProgress.SingleBar(
-        {
-          format:
-            "CLI Progress |" +
-            colors.green("{bar}") +
-            "| {percentage}% || {value}/{total} Files",
-        },
-        cliProgress.Presets.shades_classic
+      await process(
+        "Compress Images",
+        argv.files,
+        argv.files.length,
+        (imageFile) => compressImages(argv, imageFile)
       );
-      progressBar.start(argv.files.length, 0);
-
-      argv.files.forEach((imageFile) => {
-        resizeImage(
-          path.join(getConfig, argv.directory, imageFile),
-          argv.inplace,
-          Number(0.6),
-          "compressed"
-        );
-        progressBar.increment();
-      });
-      progressBar.stop();
       log("success", "Compression has been completed for specified files.");
     } else if (!argv.files && argv.directory) {
-      const len = fs.readdirSync(
-        path.join(getConfig, "phofiles", argv.directory)
-      ).length;
-      const progressBar = new cliProgress.SingleBar(
-        {
-          format:
-            "CLI Progress |" +
-            colors.green("{bar}") +
-            "| {percentage}% || {value}/{total} Chunks",
-        },
-        cliProgress.Presets.shades_classic
+      const dirPath = path.join(getConfig, "phofiles", argv.directory);
+      await process(
+        "Compress Images",
+        fs.readdirSync(dirPath),
+        getDirLength(dirPath),
+        (imageFile) => compressImages(argv, imageFile)
       );
-      progressBar.start(len, 0);
-
-      fs.readdirSync(path.join(getConfig, "phofiles", argv.directory)).forEach(
-        (imageFile) => {
-          resizeImage(
-            path.join(getConfig, "phofiles", argv.directory, imageFile),
-            argv.inplace,
-            Number(0.6),
-            "compressed"
-          );
-          progressBar.increment();
-        }
-      );
-      progressBar.stop();
       log(
         "success",
         "Compression has been completed for specified directories."
@@ -95,4 +61,14 @@ const compress = {
     }
   },
 };
+
+const compressImages = async (argv, imageFile = "") => {
+  await resizeImage(
+    path.join(getConfig, "phofiles", argv.directory, imageFile),
+    argv.inplace,
+    Number(0.6),
+    "compressed"
+  );
+};
+
 module.exports = compress;

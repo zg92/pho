@@ -16,7 +16,7 @@ const getMetricsOperation = async (
   options,
   fileList
 ) => {
-  const fileList = [];
+  fileList = [];
   fs.readdirSync(customPath).forEach((file) => {
     if (extraData == false) {
       fileList.push(file);

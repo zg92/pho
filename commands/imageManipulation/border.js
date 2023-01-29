@@ -1,12 +1,12 @@
 const path = require("path");
-const whiteSpace = require("../../utilities/imgUtils/whitespaceImage");
+const borderImage = require("../../utilities/imgUtils/whitespaceImage");
 const fs = require("fs");
 const config = require("../../utilities/logUtils/log");
 const getConfig = config().get("baseDir");
 const log = require("../../utilities/logUtils/consoleLogging");
-const cliProgress = require("cli-progress");
-const colors = require("ansi-colors");
 const commandJSON = require("../commandData.json");
+const { process } = require("../../utilities/processUtils/processBarProcess");
+const getDirLength = require("../../utilities/pathUtils/getDirLength");
 
 const border = {
   command: commandJSON.border.command,
@@ -39,7 +39,7 @@ const border = {
     yargs.option("igify", {
       alias: "ig",
       type: "boolean",
-      describe: "Creates a whitespace 4x5 crop used for upload to IG.",
+      describe: commandJSON.border.arguments.igifyDesc,
       default: false,
     });
   },
@@ -51,57 +51,24 @@ const border = {
       );
     } else {
       if (argv.files) {
-        const progressBar = new cliProgress.SingleBar(
-          {
-            format:
-              "CLI Progress |" +
-              colors.green("{bar}") +
-              "| {percentage}% || {value}/{total} Files",
-          },
-          cliProgress.Presets.shades_classic
+        await process(
+          "Border Images",
+          argv.files,
+          argv.files.length,
+          (imageFile) => borderImages(argv, imageFile)
         );
-        progressBar.start(argv.files.length, 0);
-        promises = argv.files.map(async (imageFile) => {
-          await whiteSpace(
-            path.join(getConfig, imageFile),
-            argv.size,
-            argv.igify
-          );
-          progressBar.increment();
-        });
-        await Promise.all(promises);
-        progressBar.stop();
         log(
           "success",
           "Border creation has been completed for specified folder."
         );
       } else if (!argv.files && argv.directory) {
-        const len = fs.readdirSync(
-          path.join(getConfig, "phofiles", argv.directory)
-        ).length;
-        const progressBar = new cliProgress.SingleBar(
-          {
-            format:
-              "CLI Progress |" +
-              colors.green("{bar}") +
-              "| {percentage}% || {value}/{total} Files",
-          },
-          cliProgress.Presets.shades_classic
+        const dirPath = path.join(getConfig, "phofiles", argv.directory);
+        await process(
+          "Border Images",
+          fs.readdirSync(dirPath),
+          getDirLength(dirPath),
+          (imageFile) => borderImages(argv, imageFile)
         );
-        progressBar.start(len, 0);
-        const promises = fs
-          .readdirSync(path.join(getConfig, "phofiles", argv.directory))
-          .map(async (imageFile) => {
-            await whiteSpace(
-              path.join(getConfig, "phofiles", argv.directory, imageFile),
-              argv.size,
-              argv.igify
-            );
-            progressBar.increment();
-          });
-
-        await Promise.all(promises);
-        progressBar.stop();
         log(
           "success",
           "Border creation has been completed for specified directory."
@@ -114,6 +81,14 @@ const border = {
       }
     }
   },
+};
+
+const borderImages = async (argv, imageFile = "") => {
+  await borderImage(
+    path.join(getConfig, "phofiles", argv.directory, imageFile),
+    argv.size,
+    argv.igify
+  );
 };
 
 module.exports = border;
