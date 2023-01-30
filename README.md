@@ -32,6 +32,7 @@ The following commands are supported:
 ### Look at files in different Pho directories:
 
 - `pho peek [directory] [extra] [files] [options]`: Peek at a directory or file(s) to see their metrics and/or exif data.
+- `pho dirpeek [extra]`: Get data about directories in the Pho file system.
 
 ### Image file operations:
 

@@ -8,6 +8,8 @@ const log = (type, message) => {
       return console.log(colors.yellow.bold(message));
     case "error":
       return console.log(colors.red.bold(message));
+    case "white":
+      return console.log(colors.white.bold(message));
   }
 };
 

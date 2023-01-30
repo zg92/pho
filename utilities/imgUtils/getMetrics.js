@@ -4,18 +4,18 @@ const path = require("path");
 const getExif = require("./getExif");
 const log = require("../logUtils/consoleLogging");
 
+const logJSON = (file) => {
+  log("white", ` - ${file.len > 1 ? file[0] : file}`);
+  file.len > 1 ? log("inform", `${JSON.stringify(file[1], null, 3)}`) : null;
+};
+
 const logFiles = (customPath, fileList) => {
   log("inform", `${customPath} has ${customPath.length} files`);
   log("inform", "The files are:");
-  fileList.forEach((file) => console.log(JSON.stringify(file)));
+  fileList.forEach((file) => logJSON(file));
 };
 
-const getMetricsOperation = async (
-  customPath,
-  extraData,
-  options,
-  fileList
-) => {
+const getMetricsOperation = async (customPath, extraData, options) => {
   fileList = [];
   fs.readdirSync(customPath).forEach((file) => {
     if (extraData == false) {

@@ -35,13 +35,20 @@
 },
 
 "peek": {
-    "command": "peek [directory] [extra] [files] [options]",
+    "command": "peek [directory] [exif] [files] [options]",
     "description": "Peek at a directory or file(s) to see their metrics and/or exif data.",
     "arguments": {
         "directoryDesc": "Specify the directory you want to peek at.",
         "exifDesc": "Specify if you would like returned files from the directory to include exif information (this arg is not considered when peeking at a specific file using --files).",
         "filesDesc": "Specify the file name (e.g. file.jpg) you want to get the exif data from.",
         "optionsDesc": "If you use the file arg, --options specify what exif data you want to retrieve by passing the needed info's name seperated by commas with no spacing. Options can be passed in all lowercase or using capitalization shown in the raw exif results."
+    }
+},
+"dirPeek": {
+    "command": "dirpeek [extra]",
+    "description": "Get data about directories in the Pho file system.",
+    "arguments": {
+        "extra": "Optional argument that enables additional metrics to be shown about each directory"
     }
 },
 
@@ -86,7 +93,7 @@
 },
 "resize": {
     "command": "resize [inplace] [directory] [files] [resize]",
-    "description":  "Compress all .jpg files in a directory, a single file, or multiple files.",
+    "description":  "Resize all .jpg files in a directory, a single file, or multiple files.",
     "arguments": {
         "inplaceDesc": "Flag that lets you perform the compressor operation within the same folder as the specified --directory or --file. By default this value is set to false, so a copy folder will be created containing the processed photos.",
         "directoryDesc": "Optional parameter that will perform the image resize on an entire directory. If the --file option is also set, the `--directory` will be used to locate the target --file(s).",

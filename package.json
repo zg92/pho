@@ -1,5 +1,5 @@
 {
-  "name": "pho.js",
+  "name": "pho",
   "version": "1.0.0",
   "description": "Command line interface for photography (Pho)",
   "bin": {
