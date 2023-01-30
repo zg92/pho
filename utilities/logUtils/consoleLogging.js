@@ -1,16 +1,16 @@
-const colors = require("ansi-colors");
+const colors = require('ansi-colors')
 
 const log = (type, message) => {
   switch (type) {
-    case "success":
-      return console.log(colors.green.bold(message));
-    case "inform":
-      return console.log(colors.yellow.bold(message));
-    case "error":
-      return console.log(colors.red.bold(message));
-    case "white":
-      return console.log(colors.white.bold(message));
+    case 'success':
+      return console.log(colors.green.bold(message))
+    case 'inform':
+      return console.log(colors.yellow.bold(message))
+    case 'error':
+      return console.log(colors.red.bold(message))
+    case 'white':
+      return console.log(colors.white.bold(message))
   }
-};
+}
 
-module.exports = log;
+module.exports = log

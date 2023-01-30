@@ -1,30 +1,30 @@
-const path = require("path");
+const path = require('path')
 
 const checkFileExt = (file) => {
-  const fileType = path.parse(file).ext;
+  const fileType = path.parse(file).ext
 
   if (
-    (fileType !== undefined && fileType.toLowerCase() === ".jpg") ||
-    fileType.toLowerCase() === ".png" ||
-    fileType.toLowerCase() === ".jpeg"
+    (fileType !== undefined && fileType.toLowerCase() === '.jpg') ||
+    fileType.toLowerCase() === '.png' ||
+    fileType.toLowerCase() === '.jpeg'
   ) {
-    return true;
+    return true
   } else {
-    return false;
+    return false
   }
-};
+}
 
 const onlyJpgFilter = (file) => {
-  const fileType = path.parse(file).ext;
+  const fileType = path.parse(file).ext
 
   if (
-    (fileType !== undefined && fileType.toLowerCase() === ".jpg") ||
-    fileType.toLowerCase() === ".jpeg"
+    (fileType !== undefined && fileType.toLowerCase() === '.jpg') ||
+    fileType.toLowerCase() === '.jpeg'
   ) {
-    return true;
+    return true
   } else {
-    return false;
+    return false
   }
-};
+}
 
-module.exports = { onlyJpgFilter, checkFileExt };
+module.exports = { onlyJpgFilter, checkFileExt }

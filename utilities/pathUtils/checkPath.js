@@ -1,11 +1,11 @@
-const fs = require("fs");
+const fs = require('fs')
 
 const checkPath = (pathLocation) => {
   if (fs.existsSync(pathLocation)) {
-    return true;
+    return true
   } else {
-    return false;
+    return false
   }
-};
+}
 
-module.exports = checkPath;
+module.exports = checkPath

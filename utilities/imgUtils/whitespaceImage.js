@@ -1,11 +1,11 @@
-const getWidthHeight = require("./getWidthHeight");
-const resizeImage = require("./resizeImage");
-const sharp = require("sharp");
-const path = require("path");
-const handleError = require("../errUtils/errorHandler");
-const config = require("../logUtils/log");
-const { onlyJpgFilter } = require("../pathUtils/imgExtCheck");
-const getConfig = config().get("baseDir");
+const getWidthHeight = require('./getWidthHeight')
+const resizeImage = require('./resizeImage')
+const sharp = require('sharp')
+const path = require('path')
+const handleError = require('../errUtils/errorHandler')
+const config = require('../logUtils/log')
+const { onlyJpgFilter } = require('../pathUtils/imgExtCheck')
+const getConfig = config().get('baseDir')
 
 const createBorderImage = async (width, height) => {
   return sharp({
@@ -13,10 +13,10 @@ const createBorderImage = async (width, height) => {
       width: Math.round(width),
       height: Math.round(height),
       channels: 4,
-      background: { r: 255, g: 255, b: 255, alpha: 1 },
-    },
-  });
-};
+      background: { r: 255, g: 255, b: 255, alpha: 1 }
+    }
+  })
+}
 
 const createImageComposite = async (
   backgroundImage,
@@ -27,32 +27,32 @@ const createImageComposite = async (
 ) => {
   const { width: resizedWidth, height: resizedHeight } = await sharp(
     resizedImage
-  ).metadata();
+  ).metadata()
 
-  const x = (width - resizedWidth) / 2;
-  const y = (height - resizedHeight) / 2;
+  const x = (width - resizedWidth) / 2
+  const y = (height - resizedHeight) / 2
 
   backgroundImage
     .composite([
       {
         input: resizedImage,
         left: Math.round(x),
-        top: Math.round(y),
-      },
+        top: Math.round(y)
+      }
     ])
-    .toFile(path.join(getConfig, "phofiles", "bordered", path.parse(img).base));
-};
+    .toFile(path.join(getConfig, 'phofiles', 'bordered', path.parse(img).base))
+}
 
 const borderImage = async (img, size, ig) => {
   if (onlyJpgFilter(img)) {
     try {
-      let { width, height } = await getWidthHeight(img);
+      let { width, height } = await getWidthHeight(img)
 
-      ig === true ? (size = 1) : size;
-      ig === true && height > width ? (width = width * 1.2) : width;
+      size = ig === true ? (size = 1) : size
+      width = ig === true && height > width ? (width = width * 1.2) : width
 
-      const backgroundImage = await createBorderImage(width, height);
-      const resizedImage = await resizeImage(img, false, size, "bordered");
+      const backgroundImage = await createBorderImage(width, height)
+      const resizedImage = await resizeImage(img, false, size, 'bordered')
 
       await createImageComposite(
         backgroundImage,
@@ -61,11 +61,11 @@ const borderImage = async (img, size, ig) => {
         height,
         img,
         ig
-      );
+      )
     } catch (err) {
-      return handleError(err);
+      return handleError(err)
     }
   }
-};
+}
 
-module.exports = borderImage;
+module.exports = borderImage
